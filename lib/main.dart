@@ -35,6 +35,7 @@ class Lava extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
         primaryColor: Colors.redAccent,
+        fontFamily: 'AvantGarde',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );

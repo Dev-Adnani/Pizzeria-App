@@ -36,7 +36,8 @@ flutter:
     - assets/animation/
 
   fonts:
-    - family: Monteserrat
+    - family: AvantGarde 
       fonts:
-        - asset:  assets/fonts/Monteserat.ttf
+        - asset:  assets/fonts/av.ttf
+        - asset:  assets/fonts/av2.ttf
 

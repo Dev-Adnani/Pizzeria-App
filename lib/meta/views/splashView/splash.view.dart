@@ -15,8 +15,10 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3),
-        () => Navigator.of(context).pushNamed(AppRoutes.homeRoute));
+    Timer(
+      Duration(seconds: 3),
+      () => Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute),
+    );
     super.initState();
   }
 

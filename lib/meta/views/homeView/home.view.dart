@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizzeria/core/notifiers/footer.notifier.dart';
 import 'package:pizzeria/core/notifiers/header.notifier.dart';
 import 'package:pizzeria/core/notifiers/middle.notifier.dart';
 
@@ -26,13 +27,18 @@ class _HomeViewState extends State<HomeView> {
                 HeaderNotifier().headerText(),
                 HeaderNotifier().headerMenu(context: context),
                 Divider(),
-                MiddleNotifier().textFav(),
-                MiddleNotifier().dataFav(context: context, collection: 'fav'),
+                MiddleNotifier().favText(),
+                MiddleNotifier().favData(context: context, collection: 'fav'),
+                MiddleNotifier().businessText(),
+                MiddleNotifier()
+                    .businessData(context: context, collection: 'fav'),
               ],
             ),
           ),
         ),
       ),
+      floatingActionButton:
+          FooterNotfier().floatingActionButton(context: context),
     );
   }
 }

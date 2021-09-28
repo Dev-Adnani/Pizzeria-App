@@ -2,11 +2,12 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:provider/provider.dart';
 
 class MiddleNotifier with ChangeNotifier {
-  Widget textFav() {
+  Widget favText() {
     return Padding(
       padding: EdgeInsets.only(top: 20.0),
       child: RichText(
@@ -31,7 +32,7 @@ class MiddleNotifier with ChangeNotifier {
     );
   }
 
-  Widget dataFav({required BuildContext context, required String collection}) {
+  Widget favData({required BuildContext context, required String collection}) {
     return Container(
       height: 250,
       child: FutureBuilder(
@@ -48,7 +49,13 @@ class MiddleNotifier with ChangeNotifier {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.detailRoute,
+                      arguments: snapshot.data[index],
+                    );
+                  },
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Container(
@@ -174,5 +181,143 @@ class MiddleNotifier with ChangeNotifier {
         },
       ),
     );
+  }
+
+  Widget businessText() {
+    return Padding(
+      padding: EdgeInsets.only(top: 5.0),
+      child: RichText(
+        text: TextSpan(
+            text: "Business ",
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              color: Colors.black,
+              fontSize: 30.0,
+            ),
+            children: [
+              TextSpan(
+                text: 'Lunch!',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ]),
+      ),
+    );
+  }
+
+  Widget businessData(
+      {required BuildContext context, required String collection}) {
+    return Container(
+        height: 400,
+        child: FutureBuilder(
+          future: Provider.of<FirebaseService>(context, listen: false)
+              .fetchData(collection: collection),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Lottie.asset('assets/animation/delivery.json'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40.0),
+                          ),
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.grey.shade400,
+                            width: 3.1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data[index]
+                                        .data()['name']
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    snapshot.data[index]
+                                        .data()['category']
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  Text(
+                                    snapshot.data[index]
+                                        .data()['notPrice']
+                                        .toString(),
+                                    style: TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        FontAwesomeIcons.rupeeSign,
+                                        size: 12,
+                                      ),
+                                      Text(
+                                        snapshot.data[index]
+                                            .data()['price']
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: Image.network(
+                                    snapshot.data[index].data()['image']),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ));
   }
 }
