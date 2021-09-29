@@ -1,6 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
@@ -126,37 +125,40 @@ class MiddleNotifier with ChangeNotifier {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 4.0),
+                              padding: EdgeInsets.only(top: 4.0, right: 20.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.star, color: Colors.yellow),
-                                      Text(
-                                        snapshot.data[index]
-                                            .data()['rating']
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0)),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.star, color: Colors.yellow),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            snapshot.data[index]
+                                                .data()['rating']
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(left: 30.0),
                                     child: Row(
                                       children: [
-                                        Icon(
-                                          FontAwesomeIcons.rupeeSign,
-                                          size: 12,
-                                        ),
                                         Text(
-                                          snapshot.data[index]
-                                              .data()['price']
-                                              .toString(),
+                                          '₹ ${snapshot.data[index].data()['price'].toString()}',
                                           style: TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.bold,
@@ -226,11 +228,11 @@ class MiddleNotifier with ChangeNotifier {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(40.0),
+                            Radius.circular(20.0),
                           ),
                           color: Colors.white,
                           border: Border.all(
@@ -239,11 +241,20 @@ class MiddleNotifier with ChangeNotifier {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                      snapshot.data[index].data()['image']),
+                                )),
                             Padding(
-                              padding: EdgeInsets.only(left: 20.0),
+                              padding: const EdgeInsets.only(right: 60.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,9 +280,7 @@ class MiddleNotifier with ChangeNotifier {
                                     ),
                                   ),
                                   Text(
-                                    snapshot.data[index]
-                                        .data()['notPrice']
-                                        .toString(),
+                                    'Orignal Price : ₹ ${snapshot.data[index].data()['notPrice'].toString()}',
                                     style: TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14.0,
@@ -281,14 +290,8 @@ class MiddleNotifier with ChangeNotifier {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(
-                                        FontAwesomeIcons.rupeeSign,
-                                        size: 12,
-                                      ),
                                       Text(
-                                        snapshot.data[index]
-                                            .data()['price']
-                                            .toString(),
+                                        'Discounted Price : ₹ ${snapshot.data[index].data()['price'].toString()}',
                                         style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.bold,
@@ -298,15 +301,6 @@ class MiddleNotifier with ChangeNotifier {
                                     ],
                                   ),
                                 ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: Image.network(
-                                    snapshot.data[index].data()['image']),
                               ),
                             ),
                           ],

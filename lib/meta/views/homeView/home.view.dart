@@ -18,22 +18,20 @@ class _HomeViewState extends State<HomeView> {
       body: Padding(
         padding: EdgeInsets.only(left: 8.0),
         child: SingleChildScrollView(
-          child: Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeaderNotifier().appBar(context: context),
-                HeaderNotifier().headerText(),
-                HeaderNotifier().headerMenu(context: context),
-                Divider(),
-                MiddleNotifier().favText(),
-                MiddleNotifier().favData(context: context, collection: 'fav'),
-                MiddleNotifier().businessText(),
-                MiddleNotifier()
-                    .businessData(context: context, collection: 'fav'),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HeaderNotifier().appBar(context: context),
+              HeaderNotifier().headerText(),
+              HeaderNotifier().headerMenu(context: context),
+              Divider(),
+              MiddleNotifier().favText(),
+              MiddleNotifier().favData(context: context, collection: 'fav'),
+              MiddleNotifier().businessText(),
+              MiddleNotifier()
+                  .businessData(context: context, collection: 'fav'),
+            ],
           ),
         ),
       ),
