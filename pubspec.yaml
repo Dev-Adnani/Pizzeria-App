@@ -24,6 +24,7 @@ dependencies:
   google_sign_in: ^5.1.1
   lottie: ^1.2.1
   provider: ^6.0.1
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -36,8 +37,7 @@ flutter:
     - assets/animation/
 
   fonts:
-    - family: AvantGarde 
+    - family: AvantGarde
       fonts:
-        - asset:  assets/fonts/av.ttf
-        - asset:  assets/fonts/av2.ttf
-
+        - asset: assets/fonts/av.ttf
+        - asset: assets/fonts/av2.ttf

@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MiddleNotifier with ChangeNotifier {
   Widget favText() {
@@ -39,9 +40,7 @@ class MiddleNotifier with ChangeNotifier {
             .fetchData(collection: collection),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Lottie.asset('assets/animation/delivery.json'),
-            );
+            return loadShimmer(context: context);
           } else {
             return ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -185,6 +184,71 @@ class MiddleNotifier with ChangeNotifier {
     );
   }
 
+  loadShimmer({required BuildContext context}) {
+    return Container(
+      height: 250,
+      child: Shimmer.fromColors(
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: 10,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  width: 200.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40.0),
+                    ),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.grey.shade400,
+                      width: 3.1,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+          baseColor: Colors.grey.shade100,
+          highlightColor: Colors.grey.shade600),
+    );
+  }
+
+  loadShimmerBusiness({required BuildContext context}) {
+    return Shimmer.fromColors(
+        child: Container(
+          height: 400,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: 10,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                child: Container(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+                    ),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.grey.shade400,
+                      width: 3.1,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        baseColor: Colors.grey.shade100,
+        highlightColor: Colors.grey.shade600);
+  }
+
   Widget businessText() {
     return Padding(
       padding: EdgeInsets.only(top: 5.0),
@@ -219,9 +283,7 @@ class MiddleNotifier with ChangeNotifier {
               .fetchData(collection: collection),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Lottie.asset('assets/animation/delivery.json'),
-              );
+              return loadShimmerBusiness(context: context);
             } else {
               return ListView.builder(
                 itemCount: snapshot.data.length,
