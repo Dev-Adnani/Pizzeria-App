@@ -22,7 +22,6 @@ dependencies:
   geolocator: ^7.6.2
   google_maps_flutter: ^2.0.10
   google_sign_in: ^5.1.1
-  lottie: ^1.2.1
   provider: ^6.0.1
   shimmer: ^2.0.0
 
@@ -34,7 +33,6 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/animation/
 
   fonts:
     - family: AvantGarde
