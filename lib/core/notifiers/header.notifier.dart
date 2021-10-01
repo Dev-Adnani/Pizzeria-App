@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pizzeria/core/services/maps.service.dart';
+import 'package:provider/provider.dart';
 
 class HeaderNotifier with ChangeNotifier {
   Widget appBar({required BuildContext context}) {
@@ -10,20 +12,34 @@ class HeaderNotifier with ChangeNotifier {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  FontAwesomeIcons.userAlt,
-                  color: Colors.grey.shade600,
-                )),
+              onPressed: () {},
+              icon: Icon(
+                FontAwesomeIcons.userAlt,
+                color: Colors.grey.shade600,
+              ),
+            ),
             Row(
               children: [
-                Icon(FontAwesomeIcons.locationArrow),
-                Text(
-                  'Data Here',
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold,
+                Icon(
+                  FontAwesomeIcons.locationArrow,
+                  size: 16.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 6.0),
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 250,
+                      maxHeight: 150,
+                    ),
+                    child: Text(
+                      Provider.of<GenerateMaps>(context, listen: true)
+                          .finalAddress,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 )
               ],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pizzeria/core/notifiers/footer.notifier.dart';
 import 'package:pizzeria/core/notifiers/header.notifier.dart';
 import 'package:pizzeria/core/notifiers/middle.notifier.dart';
+import 'package:pizzeria/core/services/maps.service.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -11,6 +13,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    Provider.of<GenerateMaps>(context, listen: false).getCurrentLocation();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

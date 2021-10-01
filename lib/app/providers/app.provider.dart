@@ -2,6 +2,7 @@ import 'package:pizzeria/core/notifiers/footer.notifier.dart';
 import 'package:pizzeria/core/notifiers/header.notifier.dart';
 import 'package:pizzeria/core/notifiers/middle.notifier.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
+import 'package:pizzeria/core/services/maps.service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -12,5 +13,6 @@ class AppProvider {
     ChangeNotifierProvider(create: (_) => HeaderNotifier()),
     ChangeNotifierProvider(create: (_) => MiddleNotifier()),
     ChangeNotifierProvider(create: (_) => FooterNotfier()),
+    ChangeNotifierProvider(create: (_) => GenerateMaps()),
   ];
 }

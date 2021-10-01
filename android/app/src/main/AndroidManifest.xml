@@ -3,6 +3,8 @@
    <application
         android:label="pizzeria"
         android:icon="@mipmap/ic_launcher">
+         <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD3zCH7RD0cVRCEyVf99YTWU7CoEly6n_k"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

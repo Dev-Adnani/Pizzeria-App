@@ -18,7 +18,9 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^4.2.1
   font_awesome_flutter: ^9.1.0
-  geocoder: ^0.2.1
+  geocoder:
+    git:
+      https://github.com/aloisdeniel/flutter_geocoder.git
   geolocator: ^7.6.2
   google_maps_flutter: ^2.0.10
   google_sign_in: ^5.1.1
