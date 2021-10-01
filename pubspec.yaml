@@ -19,11 +19,11 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   font_awesome_flutter: ^9.1.0
   geocoder:
-    git:
-      https://github.com/aloisdeniel/flutter_geocoder.git
+    git: https://github.com/aloisdeniel/flutter_geocoder.git
   geolocator: ^7.6.2
   google_maps_flutter: ^2.0.10
   google_sign_in: ^5.1.1
+  lottie: ^1.2.1
   provider: ^6.0.1
   shimmer: ^2.0.0
 
@@ -35,9 +35,11 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/animation/pizza.json
 
   fonts:
-    - family: AvantGarde
+    - family: Avenir
       fonts:
-        - asset: assets/fonts/av.ttf
-        - asset: assets/fonts/av2.ttf
+        - asset: assets/fonts/avenir_ff/AvenirLTStd-Black.otf
+        - asset: assets/fonts/avenir_ff/AvenirLTStd-Book.otf
+        - asset: assets/fonts/avenir_ff/AvenirLTStd-Roman.otf

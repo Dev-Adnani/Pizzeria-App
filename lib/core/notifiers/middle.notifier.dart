@@ -326,7 +326,6 @@ class MiddleNotifier with ChangeNotifier {
                                         .toString(),
                                     style: TextStyle(
                                       fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -336,7 +335,6 @@ class MiddleNotifier with ChangeNotifier {
                                         .toString(),
                                     style: TextStyle(
                                       fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
                                       color: Colors.blue,
                                     ),
                                   ),
@@ -345,7 +343,6 @@ class MiddleNotifier with ChangeNotifier {
                                     style: TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
                                   ),

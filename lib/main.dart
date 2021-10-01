@@ -33,9 +33,9 @@ class Lava extends StatelessWidget {
       initialRoute: AppRoutes.splashRoute,
       routes: AppRoutes.routes,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.grey,
         primaryColor: Colors.redAccent,
-        fontFamily: 'AvantGarde',
+        fontFamily: 'Avenir',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );

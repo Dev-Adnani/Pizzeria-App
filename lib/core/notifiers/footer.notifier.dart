@@ -5,6 +5,7 @@ import 'package:pizzeria/app/routes/app.routes.dart';
 class FooterNotfier with ChangeNotifier {
   Widget floatingActionButton({required BuildContext context}) {
     return FloatingActionButton(
+      backgroundColor: Colors.orange.shade400,
       onPressed: () {
         Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
       },
