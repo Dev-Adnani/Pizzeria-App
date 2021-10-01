@@ -399,7 +399,9 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             FloatingActionButton(
               backgroundColor: Colors.orange.shade400,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
+              },
               child: Icon(Icons.shopping_bag),
             ),
             Positioned(

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 
 class SplashView extends StatefulWidget {
@@ -33,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
             SizedBox(
               height: 200.0,
               width: 400.0,
-              child: Lottie.asset('assets/animation/pizza.json'),
+              child: Center(),
             ),
             RichText(
               text: TextSpan(
