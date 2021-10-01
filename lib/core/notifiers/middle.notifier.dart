@@ -343,6 +343,7 @@ class MiddleNotifier with ChangeNotifier {
                                     style: TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14.0,
+                                      fontWeight: FontWeight.w700,
                                       color: Colors.black,
                                     ),
                                   ),

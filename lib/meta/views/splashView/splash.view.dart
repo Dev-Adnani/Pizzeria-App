@@ -17,7 +17,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     Timer(
       Duration(seconds: 4),
-      () => Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute),
+      () => Navigator.of(context).pushReplacementNamed(AppRoutes.loginRoute),
     );
     super.initState();
   }
