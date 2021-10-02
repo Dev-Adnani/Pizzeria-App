@@ -132,18 +132,24 @@ class DetailCalculations with ChangeNotifier {
 
   selectSmallSize() {
     smallTapped = true;
+    mediumTapped = false;
+    largeTapped = false;
     size = 'S';
     notifyListeners();
   }
 
   selectMediumSize() {
     mediumTapped = true;
+    smallTapped = false;
+    largeTapped = false;
     size = 'M';
     notifyListeners();
   }
 
   selectLargeSize() {
     largeTapped = true;
+    smallTapped = false;
+    mediumTapped = false;
     size = 'L';
     notifyListeners();
   }
