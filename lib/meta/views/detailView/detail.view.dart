@@ -7,6 +7,7 @@ import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/notifiers/detailNotifers/detail.calculations.notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:nanoid/nanoid.dart';
 
 class DetailScreen extends StatefulWidget {
   final QueryDocumentSnapshot queryDocumentSnapshot;
@@ -445,7 +446,9 @@ class _DetailScreenState extends State<DetailScreen> {
       children: [
         GestureDetector(
           onTap: () {
+            var cartPizzaID = nanoid(5);
             final AddCartModel addCartModel = AddCartModel(
+                cartPizzaID: cartPizzaID,
                 image: widget.queryDocumentSnapshot['image'],
                 name: widget.queryDocumentSnapshot['name'],
                 size: Provider.of<DetailCalculations>(context, listen: false)
@@ -463,6 +466,7 @@ class _DetailScreenState extends State<DetailScreen> {
             Provider.of<DetailCalculations>(context, listen: false).addToCart(
               context: context,
               data: addCartModel.toMap(),
+              cartPizzaID: cartPizzaID,
             );
           },
           child: Container(

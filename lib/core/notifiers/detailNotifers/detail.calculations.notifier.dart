@@ -164,11 +164,14 @@ class DetailCalculations with ChangeNotifier {
     selected = false;
   }
 
-  addToCart({required BuildContext context, required dynamic data}) async {
+  addToCart(
+      {required BuildContext context,
+      required dynamic data,
+      required String cartPizzaID}) async {
     if (smallTapped != false || mediumTapped != false || largeTapped != false) {
       cartData++;
-      await Provider.of<FirebaseService>(context, listen: false)
-          .addDataToCart(context: context, data: data);
+      await Provider.of<FirebaseService>(context, listen: false).addDataToCart(
+          context: context, data: data, cartPizzaID: cartPizzaID);
       notifyListeners();
     } else {
       Fluttertoast.showToast(

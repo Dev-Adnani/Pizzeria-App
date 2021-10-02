@@ -3,9 +3,12 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/services/auth.service.dart';
+import 'package:provider/provider.dart';
 
 class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
@@ -84,7 +87,129 @@ class _CartViewState extends State<CartView> {
 
   Widget cartData() {
     return SizedBox(
-      height: 300.0,
+      height: 250.0,
+      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(Provider.of<AuthNotifier>(context, listen: false).getUserUid)
+            .collection('myOrders')
+            .withConverter<Map<String, dynamic>>(
+              fromFirestore: (snapshot, _) =>
+                  snapshot.data() ?? <String, dynamic>{},
+              toFirestore: (model, _) => Map<String, dynamic>.from(model),
+            )
+            .snapshots(),
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Lottie.asset('assets/animation/pizza.json'),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (
+                  BuildContext context,
+                  int index,
+                ) {
+                  return GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.grey.shade400,
+                            width: 3.1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                    snapshot.data?.docs[index].data()['image'],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 40.0),
+                              child: SizedBox(
+                                width: 150,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      snapshot.data?.docs[index].data()['name'],
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Price : ₹ ${snapshot.data?.docs[index].data()['price'].toString()}',
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Cheese   : ${snapshot.data?.docs[index].data()['cheeseValue'].toString()}',
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Onion     : ${snapshot.data?.docs[index].data()['onionValue'].toString()}',
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Ketchup  : ${snapshot.data?.docs[index].data()['ketchupValue'].toString()}',
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: CircleAvatar(
+                                child: Text(
+                                  snapshot.data?.docs[index].data()['size'],
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          }
+        },
+      ),
     );
   }
 

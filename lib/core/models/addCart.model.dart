@@ -5,7 +5,7 @@ class AddCartModel {
   final String name;
   final String size;
   final String price;
-  // final String userUid;
+  final String cartPizzaID;
   final int cheeseValue;
   final int ketchupValue;
   final int onionValue;
@@ -15,6 +15,7 @@ class AddCartModel {
     required this.name,
     required this.size,
     required this.price,
+    required this.cartPizzaID,
     required this.cheeseValue,
     required this.ketchupValue,
     required this.onionValue,
@@ -25,6 +26,7 @@ class AddCartModel {
     String? name,
     String? size,
     String? price,
+    String? cartPizzaID,
     int? cheeseValue,
     int? ketchupValue,
     int? onionValue,
@@ -34,6 +36,7 @@ class AddCartModel {
       name: name ?? this.name,
       size: size ?? this.size,
       price: price ?? this.price,
+      cartPizzaID: cartPizzaID ?? this.cartPizzaID,
       cheeseValue: cheeseValue ?? this.cheeseValue,
       ketchupValue: ketchupValue ?? this.ketchupValue,
       onionValue: onionValue ?? this.onionValue,
@@ -46,6 +49,7 @@ class AddCartModel {
       'name': name,
       'size': size,
       'price': price,
+      'cartPizzaID': cartPizzaID,
       'cheeseValue': cheeseValue,
       'ketchupValue': ketchupValue,
       'onionValue': onionValue,
@@ -58,6 +62,7 @@ class AddCartModel {
       name: map['name'],
       size: map['size'],
       price: map['price'],
+      cartPizzaID: map['cartPizzaID'],
       cheeseValue: map['cheeseValue'],
       ketchupValue: map['ketchupValue'],
       onionValue: map['onionValue'],
@@ -71,7 +76,7 @@ class AddCartModel {
 
   @override
   String toString() {
-    return 'AddCartModel(image: $image, name: $name, size: $size, price: $price, cheeseValue: $cheeseValue, ketchupValue: $ketchupValue, onionValue: $onionValue)';
+    return 'AddCartModel(image: $image, name: $name, size: $size, price: $price, cartPizzaID: $cartPizzaID, cheeseValue: $cheeseValue, ketchupValue: $ketchupValue, onionValue: $onionValue)';
   }
 
   @override
@@ -83,6 +88,7 @@ class AddCartModel {
         other.name == name &&
         other.size == size &&
         other.price == price &&
+        other.cartPizzaID == cartPizzaID &&
         other.cheeseValue == cheeseValue &&
         other.ketchupValue == ketchupValue &&
         other.onionValue == onionValue;
@@ -94,6 +100,7 @@ class AddCartModel {
         name.hashCode ^
         size.hashCode ^
         price.hashCode ^
+        cartPizzaID.hashCode ^
         cheeseValue.hashCode ^
         ketchupValue.hashCode ^
         onionValue.hashCode;
