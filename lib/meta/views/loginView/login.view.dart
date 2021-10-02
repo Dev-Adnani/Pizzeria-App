@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
+import 'package:pizzeria/core/utils/obscure.util.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
@@ -105,44 +107,51 @@ class LoginView extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        labelText: "Enter Email",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
+                        prefixIcon: Icon(Icons.email),
+                        hintText: "Enter Email",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
                       controller: userEmailController,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey.shade500,
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        labelText: "Enter Password",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      controller: userPasswordController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                    child: Consumer<ObscureTextState>(
+                      builder: (context, obs, child) {
+                        return TextFormField(
+                          controller: userPasswordController,
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                          obscureText: Provider.of<ObscureTextState>(context,
+                                  listen: false)
+                              .isTrue,
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  Provider.of<ObscureTextState>(context,
+                                          listen: false)
+                                      .toggleObs();
+                                },
+                                icon: Provider.of<ObscureTextState>(context,
+                                        listen: false)
+                                    .switchObsIcon,
+                              ),
+                              hintText: "Enter Password",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                        );
+                      },
                     ),
                   ),
                   MaterialButton(
-                    color: Colors.black,
+                    color: Colors.lightBlueAccent,
                     minWidth: 140,
                     height: 34,
                     shape: RoundedRectangleBorder(
@@ -168,30 +177,34 @@ class LoginView extends StatelessWidget {
                         )
                             .then((value) {
                           if (value) {
+                            showLoaderDialog(context);
                             Navigator.of(context)
                                 .pushReplacementNamed(AppRoutes.homeRoute);
                             userEmailController.clear();
                             userPasswordController.clear();
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                '${Provider.of<AuthNotifier>(context, listen: false).getErrorMessage}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ));
+                            Fluttertoast.showToast(
+                              msg:
+                                  "${Provider.of<AuthNotifier>(context, listen: false).getErrorMessage}",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey.shade500,
+                              textColor: Colors.white70,
+                              fontSize: 16.0,
+                            );
                           }
                         });
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            'Fill All Details',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ));
+                        Fluttertoast.showToast(
+                          msg: "Please Fill All The Fields",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey.shade500,
+                          textColor: Colors.white70,
+                          fontSize: 16.0,
+                        );
                       }
                     },
                   )
@@ -200,6 +213,25 @@ class LoginView extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
+  }
+
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
@@ -233,51 +265,58 @@ class LoginView extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        labelText: "Enter Email",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
+                        prefixIcon: Icon(Icons.email),
+                        hintText: "Enter Email",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
                       controller: userEmailController,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey.shade500,
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                        labelText: "Enter Password",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      controller: userPasswordController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                    child: Consumer<ObscureTextState>(
+                      builder: (context, obs, child) {
+                        return TextFormField(
+                          controller: userPasswordController,
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                          obscureText: Provider.of<ObscureTextState>(context,
+                                  listen: false)
+                              .isTrue,
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  Provider.of<ObscureTextState>(context,
+                                          listen: false)
+                                      .toggleObs();
+                                },
+                                icon: Provider.of<ObscureTextState>(context,
+                                        listen: false)
+                                    .switchObsIcon,
+                              ),
+                              hintText: "Enter Password",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                        );
+                      },
                     ),
                   ),
                   MaterialButton(
-                    color: Colors.black,
+                    color: Colors.lightBlueAccent,
                     minWidth: 140,
                     height: 34,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'Login',
+                      'Sign Up',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 17,
@@ -296,30 +335,34 @@ class LoginView extends StatelessWidget {
                         )
                             .then((value) {
                           if (value) {
+                            showLoaderDialog(context);
                             Navigator.of(context)
                                 .pushReplacementNamed(AppRoutes.homeRoute);
                             userEmailController.clear();
                             userPasswordController.clear();
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                '${Provider.of<AuthNotifier>(context, listen: false).getErrorMessage}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ));
+                            Fluttertoast.showToast(
+                              msg:
+                                  "${Provider.of<AuthNotifier>(context, listen: false).getErrorMessage}",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey.shade500,
+                              textColor: Colors.white70,
+                              fontSize: 16.0,
+                            );
                           }
                         });
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            'Fill All Details',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ));
+                        Fluttertoast.showToast(
+                          msg: "Please Fill All The Fields",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey.shade500,
+                          textColor: Colors.white70,
+                          fontSize: 16.0,
+                        );
                       }
                     },
                   )

@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/models/addCart.model.dart';
+import 'package:pizzeria/core/notifiers/detailNotifers/detail.calculations.notifier.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final QueryDocumentSnapshot queryDocumentSnapshot;
@@ -15,11 +18,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  int cheeseValue = 0;
-  int ketchupValue = 0;
-  int onionValue = 0;
-  int totalItems = 0;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,7 +46,9 @@ class _DetailScreenState extends State<DetailScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         IconButton(
-          onPressed: () {
+          onPressed: () async {
+            await Provider.of<DetailCalculations>(context, listen: false)
+                .removeAllData();
             Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
           },
           icon: Icon(
@@ -58,7 +58,10 @@ class _DetailScreenState extends State<DetailScreen> {
         Padding(
           padding: EdgeInsets.only(left: 280.0),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await Provider.of<DetailCalculations>(context, listen: false)
+                  .removeAllData();
+            },
             icon: Icon(
               Icons.cancel,
               color: Colors.red,
@@ -175,57 +178,99 @@ class _DetailScreenState extends State<DetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Provider.of<DetailCalculations>(context,
+                                    listen: false)
+                                .selectSmallSize();
+                          },
                           child: Container(
+                            height: 45,
+                            width: 30,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Provider.of<DetailCalculations>(context,
+                                          listen: true)
+                                      .smallTapped
+                                  ? Colors.lightBlueAccent
+                                  : Colors.white,
                               border: Border.all(color: Colors.orange.shade500),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'S',
-                                style: TextStyle(
-                                  fontSize: 20.0,
+                              child: Center(
+                                child: Text(
+                                  'S',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Provider.of<DetailCalculations>(context,
+                                    listen: false)
+                                .selectMediumSize();
+                          },
                           child: Container(
+                            height: 45,
+                            width: 30,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Provider.of<DetailCalculations>(context,
+                                          listen: true)
+                                      .mediumTapped
+                                  ? Colors.lightBlueAccent
+                                  : Colors.white,
                               border: Border.all(color: Colors.orange.shade500),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'M',
-                                style: TextStyle(
-                                  fontSize: 20.0,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                child: Text(
+                                  'M',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Provider.of<DetailCalculations>(context,
+                                    listen: false)
+                                .selectLargeSize();
+                          },
                           child: Container(
+                            height: 45,
+                            width: 30,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Provider.of<DetailCalculations>(context,
+                                          listen: true)
+                                      .largeTapped
+                                  ? Colors.lightBlueAccent
+                                  : Colors.white,
                               border: Border.all(color: Colors.orange.shade500),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'L',
-                                style: TextStyle(
-                                  fontSize: 20.0,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'L',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
                             ),
@@ -256,18 +301,22 @@ class _DetailScreenState extends State<DetailScreen> {
                           'Cheese',
                           style: TextStyle(
                             fontSize: 22.0,
-                            fontWeight: FontWeight.w200,
-                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
                           ),
                         ),
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(EvaIcons.plus),
+                              onPressed: () {
+                                Provider.of<DetailCalculations>(context,
+                                        listen: false)
+                                    .removeCheese();
+                              },
+                              icon: Icon(EvaIcons.minus),
                             ),
                             Text(
-                              '$cheeseValue',
+                              '${Provider.of<DetailCalculations>(context, listen: true).getCheeseValue}',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -275,8 +324,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(EvaIcons.minus),
+                              onPressed: () {
+                                Provider.of<DetailCalculations>(context,
+                                        listen: false)
+                                    .addCheese();
+                              },
+                              icon: Icon(EvaIcons.plus),
                             ),
                           ],
                         )
@@ -295,18 +348,22 @@ class _DetailScreenState extends State<DetailScreen> {
                           'Onion',
                           style: TextStyle(
                             fontSize: 22.0,
-                            fontWeight: FontWeight.w200,
-                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
                           ),
                         ),
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(EvaIcons.plus),
+                              onPressed: () {
+                                Provider.of<DetailCalculations>(context,
+                                        listen: false)
+                                    .removeOnion();
+                              },
+                              icon: Icon(EvaIcons.minus),
                             ),
                             Text(
-                              '$onionValue',
+                              '${Provider.of<DetailCalculations>(context, listen: true).getOnionValue}',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -314,8 +371,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(EvaIcons.minus),
+                              onPressed: () {
+                                Provider.of<DetailCalculations>(context,
+                                        listen: false)
+                                    .addOnion();
+                              },
+                              icon: Icon(EvaIcons.plus),
                             ),
                           ],
                         )
@@ -334,18 +395,22 @@ class _DetailScreenState extends State<DetailScreen> {
                           'Ketchup',
                           style: TextStyle(
                             fontSize: 22.0,
-                            fontWeight: FontWeight.w200,
-                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
                           ),
                         ),
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(EvaIcons.plus),
+                              onPressed: () {
+                                Provider.of<DetailCalculations>(context,
+                                        listen: false)
+                                    .removeKetchup();
+                              },
+                              icon: Icon(EvaIcons.minus),
                             ),
                             Text(
-                              '$ketchupValue',
+                              '${Provider.of<DetailCalculations>(context, listen: true).getKetchupValue}',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -353,8 +418,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(EvaIcons.minus),
+                              onPressed: () {
+                                Provider.of<DetailCalculations>(context,
+                                        listen: false)
+                                    .addKetchup();
+                              },
+                              icon: Icon(EvaIcons.plus),
                             ),
                           ],
                         )
@@ -375,7 +444,27 @@ class _DetailScreenState extends State<DetailScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            final AddCartModel addCartModel = AddCartModel(
+                image: widget.queryDocumentSnapshot['image'],
+                name: widget.queryDocumentSnapshot['name'],
+                size: Provider.of<DetailCalculations>(context, listen: false)
+                    .getSize!,
+                price: widget.queryDocumentSnapshot['price'],
+                cheeseValue:
+                    Provider.of<DetailCalculations>(context, listen: false)
+                        .cheeseValue,
+                ketchupValue:
+                    Provider.of<DetailCalculations>(context, listen: false)
+                        .ketchupValue,
+                onionValue:
+                    Provider.of<DetailCalculations>(context, listen: false)
+                        .onionValue);
+            Provider.of<DetailCalculations>(context, listen: false).addToCart(
+              context: context,
+              data: addCartModel.toMap(),
+            );
+          },
           child: Container(
             width: 250.0,
             height: 50.0,
@@ -410,7 +499,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 backgroundColor: Colors.cyan,
                 radius: 10,
                 child: Text(
-                  '$totalItems',
+                  '${Provider.of<DetailCalculations>(context, listen: false).getCartData}',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: Colors.black,

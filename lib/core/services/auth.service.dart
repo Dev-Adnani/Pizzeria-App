@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AuthNotifier with ChangeNotifier {
   String? userUid;
   String? errorMessage;
-  String? get getErrorMessage => userUid;
+  String? get getErrorMessage => errorMessage;
   String? get getUserUid => userUid;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 

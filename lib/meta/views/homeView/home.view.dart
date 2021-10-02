@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pizzeria/core/notifiers/footer.notifier.dart';
-import 'package:pizzeria/core/notifiers/header.notifier.dart';
-import 'package:pizzeria/core/notifiers/middle.notifier.dart';
+import 'package:pizzeria/core/notifiers/homeNotifiers/footer.notifier.dart';
+import 'package:pizzeria/core/notifiers/homeNotifiers/header.notifier.dart';
+import 'package:pizzeria/core/notifiers/homeNotifiers/middle.notifier.dart';
 import 'package:pizzeria/core/services/maps.service.dart';
 import 'package:provider/provider.dart';
 
