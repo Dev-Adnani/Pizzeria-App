@@ -16,7 +16,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Center(
@@ -31,7 +31,7 @@ class LoginView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: 'Pizzeria ',
                   style: TextStyle(
                     fontSize: 20.0,
@@ -49,7 +49,7 @@ class LoginView extends StatelessWidget {
                   onPressed: () {
                     signUpSheet(context: context);
                   },
-                  child: Text(
+                  child: const Text(
                     'SignUp',
                     style: TextStyle(
                       color: Colors.white,
@@ -62,7 +62,7 @@ class LoginView extends StatelessWidget {
                   onPressed: () {
                     loginSheet(context: context);
                   },
-                  child: Text(
+                  child: const Text(
                     'Login',
                     style: TextStyle(
                       color: Colors.white,
@@ -96,18 +96,18 @@ class LoginView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 150.0),
                     child: Divider(
                       thickness: 4.0,
                       color: Colors.white,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email),
+                        prefixIcon: const Icon(Icons.email),
                         hintText: "Enter Email",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
@@ -120,7 +120,7 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
                     child: Consumer<ObscureTextState>(
                       builder: (context, obs, child) {
                         return TextFormField(
@@ -132,7 +132,7 @@ class LoginView extends StatelessWidget {
                                   listen: false)
                               .isTrue,
                           decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   Provider.of<ObscureTextState>(context,
@@ -157,7 +157,7 @@ class LoginView extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Login',
                       style: TextStyle(
                         color: Colors.white,
@@ -219,11 +219,12 @@ class LoginView extends StatelessWidget {
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      content: new Row(
+      content: Row(
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7),
+              child: const Text("Loading...")),
         ],
       ),
     );
@@ -254,18 +255,18 @@ class LoginView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 150.0),
                     child: Divider(
                       thickness: 4.0,
                       color: Colors.white,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email),
+                        prefixIcon: const Icon(Icons.email),
                         hintText: "Enter Email",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
@@ -278,7 +279,7 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 2.0),
                     child: Consumer<ObscureTextState>(
                       builder: (context, obs, child) {
                         return TextFormField(
@@ -290,7 +291,7 @@ class LoginView extends StatelessWidget {
                                   listen: false)
                               .isTrue,
                           decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   Provider.of<ObscureTextState>(context,
@@ -315,7 +316,7 @@ class LoginView extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Sign Up',
                       style: TextStyle(
                         color: Colors.white,

@@ -9,7 +9,7 @@ class FooterNotfier with ChangeNotifier {
       onPressed: () {
         Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
       },
-      child: Icon(EvaIcons.shoppingBagOutline),
+      child: const Icon(EvaIcons.shoppingBagOutline),
     );
   }
 }

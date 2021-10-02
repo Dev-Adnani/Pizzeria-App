@@ -15,12 +15,12 @@ class AppRoutes {
   static const String cartRoute = "/cart";
 
   static final routes = {
-    splashRoute: (context) => SplashView(),
-    homeRoute: (context) => HomeView(),
+    splashRoute: (context) => const SplashView(),
+    homeRoute: (context) => const HomeView(),
     detailRoute: (context) => DetailScreen(
         queryDocumentSnapshot: ModalRoute.of(context)!.settings.arguments
             as QueryDocumentSnapshot),
-    cartRoute: (context) => CartView(),
+    cartRoute: (context) => const CartView(),
     loginRoute: (context) => LoginView(),
   };
 }

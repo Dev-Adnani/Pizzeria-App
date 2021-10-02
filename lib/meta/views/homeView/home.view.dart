@@ -24,7 +24,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.only(left: 8.0),
+        padding: const EdgeInsets.only(left: 8.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
               HeaderNotifier().appBar(context: context),
               HeaderNotifier().headerText(),
               HeaderNotifier().headerMenu(context: context),
-              Divider(),
+              const Divider(),
               MiddleNotifier().favText(),
               MiddleNotifier().favData(context: context, collection: 'fav'),
               MiddleNotifier().businessText(),

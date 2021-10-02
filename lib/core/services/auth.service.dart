@@ -18,7 +18,6 @@ class AuthNotifier with ChangeNotifier {
 
       User? user = userCredential.user;
       userUid = user!.uid;
-      print(userUid);
 
       notifyListeners();
       return true;
@@ -26,7 +25,6 @@ class AuthNotifier with ChangeNotifier {
       errorMessage = e.message.toString();
       return false;
     } catch (e) {
-      print(e);
       errorMessage = e.toString();
       return false;
     }
@@ -42,7 +40,6 @@ class AuthNotifier with ChangeNotifier {
 
       User? user = userCredential.user;
       userUid = user!.uid;
-      print(userUid);
 
       notifyListeners();
       return true;
@@ -50,7 +47,6 @@ class AuthNotifier with ChangeNotifier {
       errorMessage = e.message.toString();
       return false;
     } catch (e) {
-      print(e);
       errorMessage = e.toString();
       return false;
     }

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Core());
+  runApp(const Core());
 }
 
 class Core extends StatelessWidget {
@@ -17,7 +17,7 @@ class Core extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: AppProvider.providers,
-      child: Lava(),
+      child: const Lava(),
     );
   }
 }

@@ -7,7 +7,7 @@ class HeaderNotifier with ChangeNotifier {
   Widget appBar({required BuildContext context}) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: 8.0),
+        padding: const EdgeInsets.only(top: 8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -20,14 +20,14 @@ class HeaderNotifier with ChangeNotifier {
             ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   FontAwesomeIcons.locationArrow,
                   size: 16.0,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 6.0),
                   child: Container(
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxWidth: 250,
                       maxHeight: 150,
                     ),
@@ -46,7 +46,7 @@ class HeaderNotifier with ChangeNotifier {
             ),
             IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   FontAwesomeIcons.search,
                   color: Colors.black,
                 )),
@@ -58,9 +58,9 @@ class HeaderNotifier with ChangeNotifier {
 
   Widget headerText() {
     return Container(
-      constraints: BoxConstraints(maxWidth: 250.0),
+      constraints: const BoxConstraints(maxWidth: 250.0),
       child: RichText(
-        text: TextSpan(
+        text: const TextSpan(
             text: 'What would you like',
             style: TextStyle(
                 fontWeight: FontWeight.w300,
@@ -82,7 +82,7 @@ class HeaderNotifier with ChangeNotifier {
 
   Widget headerMenu({required BuildContext context}) {
     return Padding(
-      padding: EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -90,13 +90,13 @@ class HeaderNotifier with ChangeNotifier {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(50.0),
                   ),
                   color: Colors.orange.shade100),
               height: 40.0,
               width: 100.0,
-              child: Center(
+              child: const Center(
                 child: Text(
                   'All Food',
                   style: TextStyle(
@@ -111,13 +111,13 @@ class HeaderNotifier with ChangeNotifier {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(50.0),
                   ),
                   color: Colors.orange.shade100),
               height: 40.0,
               width: 100.0,
-              child: Center(
+              child: const Center(
                 child: Text(
                   'Pasta',
                   style: TextStyle(
@@ -132,13 +132,13 @@ class HeaderNotifier with ChangeNotifier {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(50.0),
                   ),
                   color: Colors.orange.shade100),
               height: 40.0,
               width: 100.0,
-              child: Center(
+              child: const Center(
                 child: Text(
                   'Pizza',
                   style: TextStyle(

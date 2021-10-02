@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 
 class CartView extends StatefulWidget {
@@ -27,7 +29,7 @@ class _CartViewState extends State<CartView> {
               children: [
                 appBar(context: context),
                 headerText(),
-                cardData(),
+                cartData(),
                 shippingDetails(address: 'Mock Data', context: context),
               ],
             ),
@@ -46,15 +48,15 @@ class _CartViewState extends State<CartView> {
           onPressed: () {
             Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 280.0),
+          padding: const EdgeInsets.only(left: 280.0),
           child: IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.cancel,
               color: Colors.red,
             ),
@@ -66,7 +68,7 @@ class _CartViewState extends State<CartView> {
 
   Widget headerText() {
     return Column(
-      children: [
+      children: const [
         Text(
           'Your',
           style: TextStyle(color: Colors.grey, fontSize: 18.0),
@@ -80,9 +82,9 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  Widget cardData() {
+  Widget cartData() {
     return SizedBox(
-      height: 300,
+      height: 300.0,
     );
   }
 
@@ -116,12 +118,12 @@ class _CartViewState extends State<CartView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(FontAwesomeIcons.locationArrow),
+                        const Icon(FontAwesomeIcons.locationArrow),
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            child: Text(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text(
                               'Mock Address Here',
                               style: TextStyle(
                                 color: Colors.grey,
@@ -134,7 +136,7 @@ class _CartViewState extends State<CartView> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                     )
                   ],
                 ),
@@ -147,12 +149,12 @@ class _CartViewState extends State<CartView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(FontAwesomeIcons.clock),
+                        const Icon(FontAwesomeIcons.clock),
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            child: Text(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text(
                               'Delivery Time',
                               style: TextStyle(
                                 color: Colors.grey,
@@ -165,7 +167,7 @@ class _CartViewState extends State<CartView> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                     )
                   ],
                 ),
@@ -178,12 +180,12 @@ class _CartViewState extends State<CartView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(FontAwesomeIcons.rupeeSign),
+                        const Icon(FontAwesomeIcons.rupeeSign),
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            child: Text(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text(
                               '300',
                               style: TextStyle(
                                 color: Colors.grey,
@@ -194,7 +196,7 @@ class _CartViewState extends State<CartView> {
                         ),
                       ],
                     ),
-                    Text(
+                    const Text(
                       '300',
                       style: TextStyle(
                         color: Colors.black,
@@ -213,12 +215,12 @@ class _CartViewState extends State<CartView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(EvaIcons.person),
+                        const Icon(EvaIcons.person),
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            child: Text(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text(
                               'Delivery Guy Charges',
                               style: TextStyle(
                                 color: Colors.grey,
@@ -229,7 +231,7 @@ class _CartViewState extends State<CartView> {
                         ),
                       ],
                     ),
-                    Text(
+                    const Text(
                       '300',
                       style: TextStyle(
                         color: Colors.black,
@@ -248,12 +250,12 @@ class _CartViewState extends State<CartView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(FontAwesomeIcons.rupeeSign),
+                        const Icon(FontAwesomeIcons.rupeeSign),
                         Padding(
-                          padding: EdgeInsets.only(left: 10.0),
+                          padding: const EdgeInsets.only(left: 10.0),
                           child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            child: Text(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: const Text(
                               'Total ',
                               style: TextStyle(
                                 color: Colors.grey,
@@ -264,7 +266,7 @@ class _CartViewState extends State<CartView> {
                         ),
                       ],
                     ),
-                    Text(
+                    const Text(
                       '300',
                       style: TextStyle(
                         color: Colors.black,
@@ -295,7 +297,7 @@ class _CartViewState extends State<CartView> {
               color: Colors.orange.shade400,
               borderRadius: BorderRadius.circular(50.0),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'Place Order',
                 style: TextStyle(

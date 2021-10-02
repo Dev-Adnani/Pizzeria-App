@@ -8,9 +8,9 @@ import 'package:shimmer/shimmer.dart';
 class MiddleNotifier with ChangeNotifier {
   Widget favText() {
     return Padding(
-      padding: EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: RichText(
-        text: TextSpan(
+        text: const TextSpan(
             text: "Best ",
             style: TextStyle(
               fontWeight: FontWeight.w300,
@@ -32,7 +32,7 @@ class MiddleNotifier with ChangeNotifier {
   }
 
   Widget favData({required BuildContext context, required String collection}) {
-    return Container(
+    return SizedBox(
       height: 250,
       child: FutureBuilder(
         future: Provider.of<FirebaseService>(context, listen: false)
@@ -54,11 +54,11 @@ class MiddleNotifier with ChangeNotifier {
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       width: 200.0,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(40.0),
                         ),
                         color: Colors.white,
@@ -92,7 +92,7 @@ class MiddleNotifier with ChangeNotifier {
                                   left: 120.0,
                                   child: IconButton(
                                     onPressed: () {},
-                                    icon: Icon(
+                                    icon: const Icon(
                                       EvaIcons.heart,
                                       color: Colors.red,
                                     ),
@@ -101,10 +101,10 @@ class MiddleNotifier with ChangeNotifier {
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 8),
+                              padding: const EdgeInsets.only(top: 8),
                               child: Text(
                                 snapshot.data[index].data()['name'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
                                   color: Colors.black,
@@ -112,10 +112,10 @@ class MiddleNotifier with ChangeNotifier {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 4),
+                              padding: const EdgeInsets.only(top: 4),
                               child: Text(
                                 snapshot.data[index].data()['category'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.cyan,
@@ -123,7 +123,8 @@ class MiddleNotifier with ChangeNotifier {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 4.0, right: 20.0),
+                              padding:
+                                  const EdgeInsets.only(top: 4.0, right: 20.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -134,14 +135,15 @@ class MiddleNotifier with ChangeNotifier {
                                             BorderRadius.circular(12.0)),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.star, color: Colors.yellow),
+                                        const Icon(Icons.star,
+                                            color: Colors.yellow),
                                         Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Text(
                                             snapshot.data[index]
                                                 .data()['rating']
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
@@ -152,12 +154,12 @@ class MiddleNotifier with ChangeNotifier {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 30.0),
+                                    padding: const EdgeInsets.only(left: 30.0),
                                     child: Row(
                                       children: [
                                         Text(
                                           '₹ ${snapshot.data[index].data()['price'].toString()}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
@@ -184,7 +186,7 @@ class MiddleNotifier with ChangeNotifier {
   }
 
   loadShimmer({required BuildContext context}) {
-    return Container(
+    return SizedBox(
       height: 250,
       child: Shimmer.fromColors(
           child: ListView.builder(
@@ -193,11 +195,11 @@ class MiddleNotifier with ChangeNotifier {
             itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: 200.0,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(40.0),
                     ),
                     color: Colors.white,
@@ -217,7 +219,7 @@ class MiddleNotifier with ChangeNotifier {
 
   loadShimmerBusiness({required BuildContext context}) {
     return Shimmer.fromColors(
-        child: Container(
+        child: SizedBox(
           height: 400,
           child: ListView.builder(
             shrinkWrap: true,
@@ -225,12 +227,12 @@ class MiddleNotifier with ChangeNotifier {
             itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                 child: Container(
                   height: 100,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(20.0),
                     ),
                     color: Colors.white,
@@ -250,9 +252,9 @@ class MiddleNotifier with ChangeNotifier {
 
   Widget businessText() {
     return Padding(
-      padding: EdgeInsets.only(top: 5.0),
+      padding: const EdgeInsets.only(top: 5.0),
       child: RichText(
-        text: TextSpan(
+        text: const TextSpan(
             text: "Business ",
             style: TextStyle(
               fontWeight: FontWeight.w300,
@@ -275,7 +277,7 @@ class MiddleNotifier with ChangeNotifier {
 
   Widget businessData(
       {required BuildContext context, required String collection}) {
-    return Container(
+    return SizedBox(
         height: 400,
         child: FutureBuilder(
           future: Provider.of<FirebaseService>(context, listen: false)
@@ -289,10 +291,10 @@ class MiddleNotifier with ChangeNotifier {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                      padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(20.0),
                           ),
                           color: Colors.white,
@@ -324,7 +326,7 @@ class MiddleNotifier with ChangeNotifier {
                                     snapshot.data[index]
                                         .data()['name']
                                         .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14.0,
                                       color: Colors.black,
                                     ),
@@ -333,14 +335,14 @@ class MiddleNotifier with ChangeNotifier {
                                     snapshot.data[index]
                                         .data()['category']
                                         .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14.0,
                                       color: Colors.blue,
                                     ),
                                   ),
                                   Text(
                                     'Orignal Price : ₹ ${snapshot.data[index].data()['notPrice'].toString()}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w700,
@@ -351,7 +353,7 @@ class MiddleNotifier with ChangeNotifier {
                                     children: [
                                       Text(
                                         'Discounted Price : ₹ ${snapshot.data[index].data()['price'].toString()}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,

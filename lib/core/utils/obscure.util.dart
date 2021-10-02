@@ -5,7 +5,9 @@ class ObscureTextState with ChangeNotifier {
   bool get isTrue => _isTrue;
 
   get switchObsIcon {
-    return _isTrue ? Icon(Icons.visibility_off) : Icon(Icons.visibility);
+    return _isTrue
+        ? const Icon(Icons.visibility_off)
+        : const Icon(Icons.visibility);
   }
 
   void toggleObs() {

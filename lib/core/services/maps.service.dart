@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart' as geoCo;
+import 'package:geocoder/geocoder.dart' as geo_co;
 import 'package:geolocator/geolocator.dart';
 
 class GenerateMaps with ChangeNotifier {
@@ -8,14 +8,13 @@ class GenerateMaps with ChangeNotifier {
 
   Future getCurrentLocation() async {
     var postionData = await GeolocatorPlatform.instance.getCurrentPosition();
-    final coords = geoCo.Coordinates(
+    final coords = geo_co.Coordinates(
       postionData.latitude,
       postionData.longitude,
     );
     var address =
-        await geoCo.Geocoder.local.findAddressesFromCoordinates(coords);
+        await geo_co.Geocoder.local.findAddressesFromCoordinates(coords);
     String mainAddress = address.first.addressLine!;
-    print(mainAddress);
     finalAddress = mainAddress;
     notifyListeners();
   }

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final QueryDocumentSnapshot queryDocumentSnapshot;
-  DetailScreen({Key? key, required this.queryDocumentSnapshot})
+  const DetailScreen({Key? key, required this.queryDocumentSnapshot})
       : super(key: key);
 
   @override
@@ -51,18 +51,18 @@ class _DetailScreenState extends State<DetailScreen> {
                 .removeAllData();
             Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 280.0),
+          padding: const EdgeInsets.only(left: 280.0),
           child: IconButton(
             onPressed: () async {
               await Provider.of<DetailCalculations>(context, listen: false)
                   .removeAllData();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.cancel,
               color: Colors.red,
             ),
@@ -77,7 +77,7 @@ class _DetailScreenState extends State<DetailScreen> {
       child: SizedBox(
         height: 280.0,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
           ),
           child: Image.network(widget.queryDocumentSnapshot['image']),
@@ -112,12 +112,12 @@ class _DetailScreenState extends State<DetailScreen> {
             children: [
               Expanded(
                 child: Container(
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     maxWidth: 300,
                   ),
                   child: Text(
                     widget.queryDocumentSnapshot['name'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -129,14 +129,14 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
           Row(
             children: [
-              Icon(
+              const Icon(
                 FontAwesomeIcons.rupeeSign,
                 size: 20,
                 color: Colors.cyan,
               ),
               Text(
                 widget.queryDocumentSnapshot['price'].toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.cyan,
@@ -195,8 +195,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               border: Border.all(color: Colors.orange.shade500),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Center(
                                 child: Text(
                                   'S',
@@ -228,9 +228,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               border: Border.all(color: Colors.orange.shade500),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                                 child: Text(
                                   'M',
                                   style: TextStyle(
@@ -261,9 +261,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               border: Border.all(color: Colors.orange.shade500),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(8.0),
                                 child: Text(
                                   'L',
                                   style: TextStyle(
@@ -279,9 +279,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, top: 15.0),
+                  const Padding(
+                    padding:
+                        EdgeInsets.only(left: 20.0, right: 20.0, top: 15.0),
                     child: Text(
                       'Add more stuff',
                       style: TextStyle(
@@ -297,7 +297,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Cheese',
                           style: TextStyle(
                             fontSize: 22.0,
@@ -313,7 +313,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         listen: false)
                                     .removeCheese();
                               },
-                              icon: Icon(EvaIcons.minus),
+                              icon: const Icon(EvaIcons.minus),
                             ),
                             Text(
                               '${Provider.of<DetailCalculations>(context, listen: true).getCheeseValue}',
@@ -329,7 +329,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         listen: false)
                                     .addCheese();
                               },
-                              icon: Icon(EvaIcons.plus),
+                              icon: const Icon(EvaIcons.plus),
                             ),
                           ],
                         )
@@ -344,7 +344,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Onion',
                           style: TextStyle(
                             fontSize: 22.0,
@@ -360,7 +360,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         listen: false)
                                     .removeOnion();
                               },
-                              icon: Icon(EvaIcons.minus),
+                              icon: const Icon(EvaIcons.minus),
                             ),
                             Text(
                               '${Provider.of<DetailCalculations>(context, listen: true).getOnionValue}',
@@ -376,7 +376,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         listen: false)
                                     .addOnion();
                               },
-                              icon: Icon(EvaIcons.plus),
+                              icon: const Icon(EvaIcons.plus),
                             ),
                           ],
                         )
@@ -391,7 +391,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Ketchup',
                           style: TextStyle(
                             fontSize: 22.0,
@@ -407,7 +407,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         listen: false)
                                     .removeKetchup();
                               },
-                              icon: Icon(EvaIcons.minus),
+                              icon: const Icon(EvaIcons.minus),
                             ),
                             Text(
                               '${Provider.of<DetailCalculations>(context, listen: true).getKetchupValue}',
@@ -423,7 +423,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         listen: false)
                                     .addKetchup();
                               },
-                              icon: Icon(EvaIcons.plus),
+                              icon: const Icon(EvaIcons.plus),
                             ),
                           ],
                         )
@@ -472,7 +472,7 @@ class _DetailScreenState extends State<DetailScreen> {
               color: Colors.orange.shade400,
               borderRadius: BorderRadius.circular(50.0),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'Add to Cart',
                 style: TextStyle(
@@ -491,7 +491,7 @@ class _DetailScreenState extends State<DetailScreen> {
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
               },
-              child: Icon(Icons.shopping_bag),
+              child: const Icon(Icons.shopping_bag),
             ),
             Positioned(
               left: 32,
@@ -500,7 +500,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 radius: 10,
                 child: Text(
                   '${Provider.of<DetailCalculations>(context, listen: false).getCartData}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
                   ),
