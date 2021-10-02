@@ -1,6 +1,8 @@
+import 'package:cache_manager/core/write_cache_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:pizzeria/core/utils/obscure.util.dart';
@@ -178,6 +180,12 @@ class LoginView extends StatelessWidget {
                             .then((value) {
                           if (value) {
                             showLoaderDialog(context);
+                            WriteCache.setString(
+                                key: AppKeys.userEmail,
+                                value: userEmailController.text);
+                            WriteCache.setString(
+                                key: AppKeys.userPassword,
+                                value: userPasswordController.text);
                             Navigator.of(context)
                                 .pushReplacementNamed(AppRoutes.homeRoute);
                             userEmailController.clear();
@@ -337,6 +345,12 @@ class LoginView extends StatelessWidget {
                             .then((value) {
                           if (value) {
                             showLoaderDialog(context);
+                            WriteCache.setString(
+                                key: AppKeys.userEmail,
+                                value: userEmailController.text);
+                            WriteCache.setString(
+                                key: AppKeys.userPassword,
+                                value: userPasswordController.text);
                             Navigator.of(context)
                                 .pushReplacementNamed(AppRoutes.homeRoute);
                             userEmailController.clear();

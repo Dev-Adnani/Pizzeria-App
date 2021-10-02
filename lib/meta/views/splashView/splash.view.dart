@@ -1,9 +1,14 @@
 import 'dart:async';
 
+import 'package:cache_manager/core/cache_manager_utils.dart';
+import 'package:cache_manager/core/read_cache_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/services/auth.service.dart';
+import 'package:provider/provider.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -13,11 +18,34 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  Future initiateCache() async {
+    CacheManagerUtils.conditionalCache(
+      key: AppKeys.userEmail,
+      valueType: ValueType.StringValue,
+      actionIfNull: () {
+        Navigator.of(context).pushNamed(AppRoutes.loginRoute);
+      },
+      actionIfNotNull: () async {
+        String email = await ReadCache.getString(key: AppKeys.userEmail);
+        String password = await ReadCache.getString(key: AppKeys.userPassword);
+
+        Provider.of<AuthNotifier>(context, listen: false)
+            .logIntoAccount(
+          email: email,
+          password: password,
+        )
+            .whenComplete(() {
+          Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+        });
+      },
+    );
+  }
+
   @override
   void initState() {
     Timer(
-      const Duration(seconds: 4),
-      () => Navigator.of(context).pushReplacementNamed(AppRoutes.loginRoute),
+      const Duration(seconds: 3),
+      () => initiateCache(),
     );
     super.initState();
   }
