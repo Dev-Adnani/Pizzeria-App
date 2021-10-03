@@ -10,16 +10,12 @@ import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
+import 'package:pizzeria/core/services/maps.service.dart';
 import 'package:provider/provider.dart';
 
-class CartView extends StatefulWidget {
+class CartView extends StatelessWidget {
   const CartView({Key? key}) : super(key: key);
 
-  @override
-  _CartViewState createState() => _CartViewState();
-}
-
-class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +30,8 @@ class _CartViewState extends State<CartView> {
               children: [
                 appBar(context: context),
                 headerText(),
-                cartData(),
-                shippingDetails(address: 'Mock Data', context: context),
+                cartData(context: context),
+                shippingDetails(context: context),
               ],
             ),
           ),
@@ -47,7 +43,8 @@ class _CartViewState extends State<CartView> {
 
   Widget appBar({required BuildContext context}) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         IconButton(
           onPressed: () {
@@ -57,16 +54,6 @@ class _CartViewState extends State<CartView> {
             Icons.arrow_back_ios,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 280.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.cancel,
-              color: Colors.red,
-            ),
-          ),
-        )
       ],
     );
   }
@@ -87,9 +74,9 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  Widget cartData() {
+  Widget cartData({required BuildContext context}) {
     return SizedBox(
-      height: 250.0,
+      height: 400.0,
       child: StreamBuilder<QuerySnapshot<AddCartModel>>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -102,9 +89,30 @@ class _CartViewState extends State<CartView> {
             )
             .snapshots(),
         builder: (BuildContext context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Lottie.asset('assets/animation/pizza.json'),
+          if (snapshot.data!.docs.isEmpty ||
+              snapshot.connectionState == ConnectionState.waiting) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/animation/eating.json',
+                  height: 250,
+                  width: 250,
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: Text(
+                    'Our Other Customers Have Already Ordered & Still You Are Thinking',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.blue,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             );
           } else {
             return ListView.builder(
@@ -242,7 +250,6 @@ class _CartViewState extends State<CartView> {
     required String pizzaName,
     required String cartPizzaID,
   }) {
-    // set up the buttons
     Widget cancelButton = TextButton(
       child: const Text(
         "No",
@@ -280,7 +287,6 @@ class _CartViewState extends State<CartView> {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -289,8 +295,7 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  Widget shippingDetails(
-      {required String address, required BuildContext context}) {
+  Widget shippingDetails({required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
       child: Container(
@@ -305,8 +310,8 @@ class _CartViewState extends State<CartView> {
           borderRadius: BorderRadius.circular(40.0),
           color: Colors.white,
         ),
-        height: 300,
-        width: 400.0,
+        height: 200,
+        width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Column(
@@ -323,12 +328,15 @@ class _CartViewState extends State<CartView> {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
-                            constraints: const BoxConstraints(maxWidth: 250),
-                            child: const Text(
-                              'Mock Address Here',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16.0,
+                            constraints: const BoxConstraints(maxWidth: 200),
+                            child: Expanded(
+                              child: Text(
+                                Provider.of<GenerateMaps>(context, listen: true)
+                                    .getMainAddress,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12.0,
+                                ),
                               ),
                             ),
                           ),
@@ -336,7 +344,9 @@ class _CartViewState extends State<CartView> {
                       ],
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AppRoutes.mapRoute);
+                      },
                       icon: const Icon(Icons.edit),
                     )
                   ],
@@ -370,41 +380,6 @@ class _CartViewState extends State<CartView> {
                       onPressed: () {},
                       icon: const Icon(Icons.edit),
                     )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 35, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Icon(FontAwesomeIcons.rupeeSign),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Container(
-                            constraints: const BoxConstraints(maxWidth: 250),
-                            child: const Text(
-                              '300',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Text(
-                      '300',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ],
                 ),
               ),

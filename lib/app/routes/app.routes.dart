@@ -5,6 +5,7 @@ import 'package:pizzeria/meta/views/cartView/cart.view.dart';
 import 'package:pizzeria/meta/views/detailView/detail.view.dart';
 import 'package:pizzeria/meta/views/homeView/home.view.dart';
 import 'package:pizzeria/meta/views/loginView/login.view.dart';
+import 'package:pizzeria/meta/views/mapsView/maps.view.dart';
 import 'package:pizzeria/meta/views/splashView/splash.view.dart';
 
 class AppRoutes {
@@ -13,6 +14,7 @@ class AppRoutes {
   static const String loginRoute = "/login";
   static const String detailRoute = "/detail";
   static const String cartRoute = "/cart";
+  static const String mapRoute = "/map";
 
   static final routes = {
     splashRoute: (context) => const SplashView(),
@@ -22,5 +24,6 @@ class AppRoutes {
             as QueryDocumentSnapshot),
     cartRoute: (context) => const CartView(),
     loginRoute: (context) => LoginView(),
+    mapRoute: (context) => const Maps(),
   };
 }

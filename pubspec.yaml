@@ -40,6 +40,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/animation/pizza.json
+    - assets/animation/eating.json
 
   fonts:
     - family: Avenir

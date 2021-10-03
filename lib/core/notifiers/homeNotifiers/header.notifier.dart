@@ -1,5 +1,9 @@
+import 'package:cache_manager/cache_manager.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pizzeria/app/constants/app.keys.dart';
+import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/maps.service.dart';
 import 'package:provider/provider.dart';
 
@@ -7,17 +11,10 @@ class HeaderNotifier with ChangeNotifier {
   Widget appBar({required BuildContext context}) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
+        padding: const EdgeInsets.only(top: 12.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                FontAwesomeIcons.userAlt,
-                color: Colors.grey.shade600,
-              ),
-            ),
             Row(
               children: [
                 const Icon(
@@ -25,7 +22,7 @@ class HeaderNotifier with ChangeNotifier {
                   size: 16.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
+                  padding: const EdgeInsets.only(left: 32.0),
                   child: Container(
                     constraints: const BoxConstraints(
                       maxWidth: 250,
@@ -33,10 +30,10 @@ class HeaderNotifier with ChangeNotifier {
                     ),
                     child: Text(
                       Provider.of<GenerateMaps>(context, listen: true)
-                          .finalAddress,
+                          .getFinalAddress,
                       style: TextStyle(
                         color: Colors.grey.shade600,
-                        fontSize: 10.0,
+                        fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -45,14 +42,66 @@ class HeaderNotifier with ChangeNotifier {
               ],
             ),
             IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  FontAwesomeIcons.search,
-                  color: Colors.black,
-                )),
+              onPressed: () async {
+                showAlertDialog(context: context);
+              },
+              icon: Icon(
+                EvaIcons.logOutOutline,
+                color: Colors.grey.shade600,
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog({
+    required BuildContext context,
+  }) {
+    Widget cancelButton = TextButton(
+      child: const Text(
+        "No",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text(
+        "Yes",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.red,
+        ),
+      ),
+      onPressed: () {
+        DeleteCache.deleteKey(AppKeys.userEmail).whenComplete(() {
+          DeleteCache.deleteKey(AppKeys.userPassword);
+          Navigator.of(context).pushReplacementNamed(AppRoutes.loginRoute);
+        });
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text("Are You Sure You Want To Logout ?"),
+      content: const Text("You Will Regret About It!"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

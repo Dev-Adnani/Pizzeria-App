@@ -35,7 +35,7 @@ class _SplashViewState extends State<SplashView> {
           password: password,
         )
             .whenComplete(() {
-          Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+          Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
         });
       },
     );

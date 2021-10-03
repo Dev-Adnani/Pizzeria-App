@@ -6,24 +6,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/notifiers/detailNotifers/detail.calculations.notifier.dart';
+import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:provider/provider.dart';
 import 'package:nanoid/nanoid.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   final QueryDocumentSnapshot queryDocumentSnapshot;
   const DetailScreen({Key? key, required this.queryDocumentSnapshot})
       : super(key: key);
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: floatingButton(),
+        floatingActionButton: floatingButton(context: context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -34,7 +30,7 @@ class _DetailScreenState extends State<DetailScreen> {
               appBar(context: context),
               pizzaImage(),
               middleData(),
-              footerData(),
+              footerData(context: context),
             ],
           ),
         ),
@@ -81,7 +77,7 @@ class _DetailScreenState extends State<DetailScreen> {
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
           ),
-          child: Image.network(widget.queryDocumentSnapshot['image']),
+          child: Image.network(queryDocumentSnapshot['image']),
         ),
       ),
     );
@@ -100,7 +96,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 size: 20,
               ),
               Text(
-                widget.queryDocumentSnapshot['rating'],
+                queryDocumentSnapshot['rating'],
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w500,
@@ -117,7 +113,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     maxWidth: 300,
                   ),
                   child: Text(
-                    widget.queryDocumentSnapshot['name'],
+                    queryDocumentSnapshot['name'],
                     style: const TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
@@ -136,7 +132,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 color: Colors.cyan,
               ),
               Text(
-                widget.queryDocumentSnapshot['price'].toString(),
+                queryDocumentSnapshot['price'].toString(),
                 style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -150,7 +146,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget footerData() {
+  Widget footerData({required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SizedBox(
@@ -440,7 +436,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget floatingButton() {
+  Widget floatingButton({required BuildContext context}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -449,11 +445,11 @@ class _DetailScreenState extends State<DetailScreen> {
             var cartPizzaID = nanoid(5);
             final AddCartModel addCartModel = AddCartModel(
                 cartPizzaID: cartPizzaID,
-                image: widget.queryDocumentSnapshot['image'],
-                name: widget.queryDocumentSnapshot['name'],
+                image: queryDocumentSnapshot['image'],
+                name: queryDocumentSnapshot['name'],
                 size: Provider.of<DetailCalculations>(context, listen: false)
                     .getSize!,
-                price: widget.queryDocumentSnapshot['price'],
+                price: queryDocumentSnapshot['price'],
                 cheeseValue:
                     Provider.of<DetailCalculations>(context, listen: false)
                         .cheeseValue,
@@ -488,30 +484,12 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
         ),
-        Stack(
-          children: [
-            FloatingActionButton(
-              backgroundColor: Colors.orange.shade400,
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
-              },
-              child: const Icon(Icons.shopping_bag),
-            ),
-            Positioned(
-              left: 32,
-              child: CircleAvatar(
-                backgroundColor: Colors.cyan,
-                radius: 10,
-                child: Text(
-                  '${Provider.of<DetailCalculations>(context, listen: false).getCartData}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            )
-          ],
+        FloatingActionButton(
+          backgroundColor: Colors.orange.shade400,
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
+          },
+          child: const Icon(EvaIcons.shoppingBagOutline),
         ),
       ],
     );
