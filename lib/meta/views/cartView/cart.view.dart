@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:provider/provider.dart';
@@ -89,15 +90,15 @@ class _CartViewState extends State<CartView> {
   Widget cartData() {
     return SizedBox(
       height: 250.0,
-      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      child: StreamBuilder<QuerySnapshot<AddCartModel>>(
         stream: FirebaseFirestore.instance
             .collection('users')
             .doc(Provider.of<AuthNotifier>(context, listen: false).getUserUid)
             .collection('myOrders')
-            .withConverter<Map<String, dynamic>>(
+            .withConverter<AddCartModel>(
               fromFirestore: (snapshot, _) =>
-                  snapshot.data() ?? <String, dynamic>{},
-              toFirestore: (model, _) => Map<String, dynamic>.from(model),
+                  AddCartModel.fromMap(snapshot.data()!),
+              toFirestore: (model, _) => model.toMap(),
             )
             .snapshots(),
         builder: (BuildContext context, snapshot) {
@@ -139,7 +140,7 @@ class _CartViewState extends State<CartView> {
                                   backgroundColor: Colors.transparent,
                                   radius: 20,
                                   backgroundImage: NetworkImage(
-                                    snapshot.data?.docs[index].data()['image'],
+                                    snapshot.data!.docs[index].data().image,
                                   ),
                                 ),
                               ),
@@ -151,7 +152,7 @@ class _CartViewState extends State<CartView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    snapshot.data?.docs[index].data()['name'],
+                                    snapshot.data!.docs[index].data().name,
                                     style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500,
@@ -165,7 +166,7 @@ class _CartViewState extends State<CartView> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Price : ₹ ${snapshot.data?.docs[index].data()['price'].toString()}',
+                                        'Price : ₹ ${snapshot.data!.docs[index].data().price.toString()}',
                                         style: const TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w700,
@@ -173,21 +174,21 @@ class _CartViewState extends State<CartView> {
                                         ),
                                       ),
                                       Text(
-                                        'Cheese   : ${snapshot.data?.docs[index].data()['cheeseValue'].toString()}',
+                                        'Cheese   : ${snapshot.data!.docs[index].data().cheeseValue.toString()}',
                                         style: const TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.black,
                                         ),
                                       ),
                                       Text(
-                                        'Onion     : ${snapshot.data?.docs[index].data()['onionValue'].toString()}',
+                                        'Onion     : ${snapshot.data!.docs[index].data().onionValue.toString()}',
                                         style: const TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.black,
                                         ),
                                       ),
                                       Text(
-                                        'Ketchup  : ${snapshot.data?.docs[index].data()['ketchupValue'].toString()}',
+                                        'Ketchup  : ${snapshot.data!.docs[index].data().ketchupValue.toString()}',
                                         style: const TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.black,
@@ -200,7 +201,7 @@ class _CartViewState extends State<CartView> {
                             ),
                             CircleAvatar(
                               child: Text(
-                                snapshot.data?.docs[index].data()['size'],
+                                snapshot.data!.docs[index].data().size,
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),
@@ -210,10 +211,12 @@ class _CartViewState extends State<CartView> {
                                   onPressed: () {
                                     showAlertDialog(
                                       context: context,
-                                      pizzaName: snapshot.data?.docs[index]
-                                          .data()['name'],
-                                      cartPizzaID: snapshot.data?.docs[index]
-                                          .data()['cartPizzaID'],
+                                      pizzaName: snapshot.data!.docs[index]
+                                          .data()
+                                          .name,
+                                      cartPizzaID: snapshot.data!.docs[index]
+                                          .data()
+                                          .cartPizzaID,
                                     );
                                   },
                                   icon: const Icon(
