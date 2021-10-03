@@ -21,61 +21,137 @@ class LoginView extends StatelessWidget {
       decoration: const BoxDecoration(),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
+      child: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [
+                  0.2,
+                  0.45,
+                  0.6,
+                  0.9
+                ],
+                    colors: [
+                  Colors.grey,
+                  Colors.orange,
+                ])),
+          ),
+          SizedBox(
+            height: 500.0,
+            width: MediaQuery.of(context).size.width,
+            child: SizedBox(
               height: 200.0,
               width: 400.0,
               child: Lottie.asset('assets/animation/pizza.json'),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+          ),
+          Positioned(
+            top: 420.0,
+            left: 10.0,
+            child: SizedBox(
+              height: 200.0,
+              width: 200.0,
               child: RichText(
                 text: const TextSpan(
-                  text: 'Pizzeria ',
+                  text: 'Welcome ',
                   style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 46.0),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'To Pizzeria ',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40.0),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  color: Colors.blueGrey,
-                  onPressed: () {
-                    signUpSheet(context: context);
-                  },
-                  child: const Text(
-                    'SignUp',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+          ),
+          Positioned(
+            top: 600.0,
+            child: SizedBox(
+              width: 400.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      signUpSheet(context: context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.blueGrey,
+                        ),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      width: 100.0,
+                      height: 50.0,
+                      child: const Center(
+                        child: Text('Sign in',
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0)),
+                      ),
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {
+                      loginSheet(context: context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.blueGrey,
+                        ),
+                        borderRadius: BorderRadius.circular(
+                          25.0,
+                        ),
+                      ),
+                      width: 100.0,
+                      height: 50.0,
+                      child: const Center(
+                        child: Text('Login',
+                            style: TextStyle(
+                                color: Colors.lightBlueAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+              top: 720.0,
+              left: 20.0,
+              right: 20.0,
+              child: Container(
+                width: 400.0,
+                constraints: const BoxConstraints(maxHeight: 200.0),
+                child: Column(
+                  children: [
+                    Text("By continuing you agree Pizzeria's Terms of ",
+                        style: TextStyle(
+                            color: Colors.grey.shade600, fontSize: 12.0)),
+                    Text("Services & Privacy Policy",
+                        style: TextStyle(
+                            color: Colors.grey.shade600, fontSize: 12.0))
+                  ],
                 ),
-                MaterialButton(
-                  color: Colors.teal.shade800,
-                  onPressed: () {
-                    loginSheet(context: context);
-                  },
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
+              ))
+        ],
       ),
     ));
   }

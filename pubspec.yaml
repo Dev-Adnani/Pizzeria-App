@@ -28,6 +28,7 @@ dependencies:
   lottie: ^1.2.1
   nanoid: ^1.0.0
   provider: ^6.0.1
+  razorpay_flutter: ^1.2.7
   shimmer: ^2.0.0
 
 dev_dependencies:

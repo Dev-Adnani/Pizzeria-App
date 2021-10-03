@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/notifiers/detailNotifers/detail.calculations.notifier.dart';
-import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:provider/provider.dart';
 import 'package:nanoid/nanoid.dart';
 
@@ -459,10 +459,20 @@ class DetailScreen extends StatelessWidget {
                 onionValue:
                     Provider.of<DetailCalculations>(context, listen: false)
                         .onionValue);
+            //Data
             Provider.of<DetailCalculations>(context, listen: false).addToCart(
               context: context,
               data: addCartModel.toMap(),
               cartPizzaID: cartPizzaID,
+            );
+            Fluttertoast.showToast(
+              msg: "Added Successfully To Cart",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.grey.shade500,
+              textColor: Colors.white70,
+              fontSize: 16.0,
             );
           },
           child: Container(

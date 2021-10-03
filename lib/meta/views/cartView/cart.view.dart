@@ -6,15 +6,69 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:pizzeria/core/services/maps.service.dart';
+import 'package:pizzeria/core/services/payment.service.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class CartView extends StatelessWidget {
+class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
+
+  @override
+  State<CartView> createState() => _CartViewState();
+}
+
+class _CartViewState extends State<CartView> {
+  Razorpay razorpay = Razorpay();
+
+  @override
+  void initState() {
+    razorpay.on(
+        Razorpay.EVENT_PAYMENT_SUCCESS,
+        Provider.of<PaymentService>(context, listen: false)
+            .handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+        Provider.of<PaymentService>(context, listen: false).handlePaymentError);
+    razorpay.on(
+        Razorpay.EVENT_EXTERNAL_WALLET,
+        Provider.of<PaymentService>(context, listen: false)
+            .handleExternalWallet);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    razorpay.clear();
+    super.dispose();
+  }
+
+  Future checkMeOut() async {
+    var options = {
+      'key': AppKeys.razorKey,
+      'amount': 150,
+      'name': Provider.of<AuthNotifier>(context, listen: false).getUserEmail,
+      'description': 'Payment',
+      'prefill': {
+        'contact': '8888888888',
+        'email': Provider.of<AuthNotifier>(context, listen: false).getUserEmail,
+      },
+      'external': {
+        'wallet': ['paytm']
+      }
+    };
+
+    try {
+      razorpay.open(options);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -329,14 +383,12 @@ class CartView extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
                             constraints: const BoxConstraints(maxWidth: 200),
-                            child: Expanded(
-                              child: Text(
-                                Provider.of<GenerateMaps>(context, listen: true)
-                                    .getMainAddress,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.0,
-                                ),
+                            child: Text(
+                              Provider.of<GenerateMaps>(context, listen: true)
+                                  .getMainAddress,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12.0,
                               ),
                             ),
                           ),
@@ -345,7 +397,8 @@ class CartView extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.mapRoute);
+                        Provider.of<PaymentService>(context, listen: false)
+                            .selectLocation(context);
                       },
                       icon: const Icon(Icons.edit),
                     )
@@ -365,9 +418,9 @@ class CartView extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Container(
                             constraints: const BoxConstraints(maxWidth: 250),
-                            child: const Text(
-                              'Delivery Time',
-                              style: TextStyle(
+                            child: Text(
+                              'Delivery Time : ${Provider.of<PaymentService>(context, listen: true).deliveryTiming == TimeOfDay.now() ? "" : Provider.of<PaymentService>(context, listen: true).deliveryTiming.format(context)}',
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16.0,
                               ),
@@ -377,7 +430,10 @@ class CartView extends StatelessWidget {
                       ],
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Provider.of<PaymentService>(context, listen: false)
+                            .selectTime(context: context);
+                      },
                       icon: const Icon(Icons.edit),
                     )
                   ],
@@ -465,7 +521,9 @@ class CartView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            checkMeOut();
+          },
           child: Container(
             width: 250.0,
             height: 50.0,

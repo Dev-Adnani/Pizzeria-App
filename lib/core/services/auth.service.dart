@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class AuthNotifier with ChangeNotifier {
   String? userUid;
+  String? userEmail;
   String? errorMessage;
+  String? get getUserEmail => userEmail;
   String? get getErrorMessage => errorMessage;
   String? get getUserUid => userUid;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -18,7 +20,7 @@ class AuthNotifier with ChangeNotifier {
 
       User? user = userCredential.user;
       userUid = user!.uid;
-
+      userEmail = user.email;
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -40,6 +42,7 @@ class AuthNotifier with ChangeNotifier {
 
       User? user = userCredential.user;
       userUid = user!.uid;
+      userEmail = user.email;
 
       notifyListeners();
       return true;

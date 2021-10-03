@@ -32,4 +32,11 @@ class FirebaseService with ChangeNotifier {
         .doc(cartPizzaID)
         .delete();
   }
+
+  Future placeOrder({
+    required BuildContext context,
+    required dynamic data,
+  }) async {
+    return firebaseFirestore.collection('admin').add(data);
+  }
 }

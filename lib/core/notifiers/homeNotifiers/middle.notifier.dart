@@ -290,6 +290,13 @@ class MiddleNotifier with ChangeNotifier {
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.detailRoute,
+                        arguments: snapshot.data[index],
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                       child: Container(
