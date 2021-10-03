@@ -442,38 +442,57 @@ class DetailScreen extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            var cartPizzaID = nanoid(5);
-            final AddCartModel addCartModel = AddCartModel(
+            if (Provider.of<DetailCalculations>(context, listen: false)
+                        .smallTapped !=
+                    false ||
+                Provider.of<DetailCalculations>(context, listen: false)
+                        .mediumTapped !=
+                    false ||
+                Provider.of<DetailCalculations>(context, listen: false)
+                        .largeTapped !=
+                    false) {
+              var cartPizzaID = nanoid(5);
+              final AddCartModel addCartModel = AddCartModel(
+                  cartPizzaID: cartPizzaID,
+                  image: queryDocumentSnapshot['image'],
+                  name: queryDocumentSnapshot['name'],
+                  size: Provider.of<DetailCalculations>(context, listen: false)
+                      .getSize!,
+                  price: queryDocumentSnapshot['price'],
+                  cheeseValue:
+                      Provider.of<DetailCalculations>(context, listen: false)
+                          .cheeseValue,
+                  ketchupValue:
+                      Provider.of<DetailCalculations>(context, listen: false)
+                          .ketchupValue,
+                  onionValue:
+                      Provider.of<DetailCalculations>(context, listen: false)
+                          .onionValue);
+              //Data
+              Provider.of<DetailCalculations>(context, listen: false).addToCart(
+                context: context,
+                data: addCartModel.toMap(),
                 cartPizzaID: cartPizzaID,
-                image: queryDocumentSnapshot['image'],
-                name: queryDocumentSnapshot['name'],
-                size: Provider.of<DetailCalculations>(context, listen: false)
-                    .getSize!,
-                price: queryDocumentSnapshot['price'],
-                cheeseValue:
-                    Provider.of<DetailCalculations>(context, listen: false)
-                        .cheeseValue,
-                ketchupValue:
-                    Provider.of<DetailCalculations>(context, listen: false)
-                        .ketchupValue,
-                onionValue:
-                    Provider.of<DetailCalculations>(context, listen: false)
-                        .onionValue);
-            //Data
-            Provider.of<DetailCalculations>(context, listen: false).addToCart(
-              context: context,
-              data: addCartModel.toMap(),
-              cartPizzaID: cartPizzaID,
-            );
-            Fluttertoast.showToast(
-              msg: "Added Successfully To Cart",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.grey.shade500,
-              textColor: Colors.white70,
-              fontSize: 16.0,
-            );
+              );
+              Fluttertoast.showToast(
+                msg: "Added Successfully To Cart",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.grey.shade500,
+                textColor: Colors.white70,
+                fontSize: 16.0,
+              );
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Please Select Pizza Size",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.grey.shade500,
+                  textColor: Colors.white70,
+                  fontSize: 16.0);
+            }
           },
           child: Container(
             width: 250.0,

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 class DetailCalculations with ChangeNotifier {
   int cheeseValue = 0;
   int onionValue = 0;
-  int cartData = 0;
   int ketchupValue = 0;
   String? size;
 
@@ -18,14 +17,13 @@ class DetailCalculations with ChangeNotifier {
   int? get getCheeseValue => cheeseValue;
   int? get getOnionValue => onionValue;
   String? get getSize => size;
-  int? get getCartData => cartData;
   int? get getKetchupValue => ketchupValue;
   bool? get getSelected => selected;
 
   addCheese() {
     if (cheeseValue >= 5) {
       Fluttertoast.showToast(
-        msg: "We Care For Our Customer's , Hence No More Cheese Is Allowed",
+        msg: "Do You Want To Eat Pizza Or Cheese ?",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -169,7 +167,6 @@ class DetailCalculations with ChangeNotifier {
       required dynamic data,
       required String cartPizzaID}) async {
     if (smallTapped != false || mediumTapped != false || largeTapped != false) {
-      cartData++;
       await Provider.of<FirebaseService>(context, listen: false).addDataToCart(
           context: context, data: data, cartPizzaID: cartPizzaID);
       notifyListeners();
