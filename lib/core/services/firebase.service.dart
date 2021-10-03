@@ -22,4 +22,14 @@ class FirebaseService with ChangeNotifier {
         .doc(cartPizzaID)
         .set(data);
   }
+
+  Future deleteDataFromCart(
+      {required BuildContext context, required String cartPizzaID}) async {
+    return firebaseFirestore
+        .collection('users')
+        .doc(Provider.of<AuthNotifier>(context, listen: false).getUserUid)
+        .collection('myOrders')
+        .doc(cartPizzaID)
+        .delete();
+  }
 }

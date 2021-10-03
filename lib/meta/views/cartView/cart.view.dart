@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
+import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:provider/provider.dart';
 
 class CartView extends StatefulWidget {
@@ -132,8 +133,8 @@ class _CartViewState extends State<CartView> {
                             Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: SizedBox(
-                                height: 100,
-                                width: 100,
+                                height: 80,
+                                width: 80,
                                 child: CircleAvatar(
                                   backgroundColor: Colors.transparent,
                                   radius: 20,
@@ -143,64 +144,84 @@ class _CartViewState extends State<CartView> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 40.0),
-                              child: SizedBox(
-                                width: 150,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      snapshot.data?.docs[index].data()['name'],
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      ),
+                            SizedBox(
+                              width: 150,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data?.docs[index].data()['name'],
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
                                     ),
-                                    Text(
-                                      'Price : ₹ ${snapshot.data?.docs[index].data()['price'].toString()}',
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.blue,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Price : ₹ ${snapshot.data?.docs[index].data()['price'].toString()}',
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.blue,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      'Cheese   : ${snapshot.data?.docs[index].data()['cheeseValue'].toString()}',
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
+                                      Text(
+                                        'Cheese   : ${snapshot.data?.docs[index].data()['cheeseValue'].toString()}',
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      'Onion     : ${snapshot.data?.docs[index].data()['onionValue'].toString()}',
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
+                                      Text(
+                                        'Onion     : ${snapshot.data?.docs[index].data()['onionValue'].toString()}',
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      'Ketchup  : ${snapshot.data?.docs[index].data()['ketchupValue'].toString()}',
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
+                                      Text(
+                                        'Ketchup  : ${snapshot.data?.docs[index].data()['ketchupValue'].toString()}',
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            CircleAvatar(
+                              child: Text(
+                                snapshot.data?.docs[index].data()['size'],
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: CircleAvatar(
-                                child: Text(
-                                  snapshot.data?.docs[index].data()['size'],
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    showAlertDialog(
+                                      context: context,
+                                      pizzaName: snapshot.data?.docs[index]
+                                          .data()['name'],
+                                      cartPizzaID: snapshot.data?.docs[index]
+                                          .data()['cartPizzaID'],
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    FontAwesomeIcons.trashAlt,
+                                    size: 24,
+                                    color: Colors.red,
+                                  ),
+                                )),
                           ],
                         ),
                       ),
@@ -210,6 +231,58 @@ class _CartViewState extends State<CartView> {
           }
         },
       ),
+    );
+  }
+
+  showAlertDialog({
+    required BuildContext context,
+    required String pizzaName,
+    required String cartPizzaID,
+  }) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text(
+        "No",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text(
+        "Yes",
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.red,
+        ),
+      ),
+      onPressed: () {
+        Provider.of<FirebaseService>(context, listen: false)
+            .deleteDataFromCart(context: context, cartPizzaID: cartPizzaID)
+            .whenComplete(() => Navigator.of(context).pop());
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete $pizzaName From Your Cart ?"),
+      content: const Text("You Will Regret About It!"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
