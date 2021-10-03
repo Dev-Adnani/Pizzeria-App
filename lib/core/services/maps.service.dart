@@ -7,11 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GenerateMaps with ChangeNotifier {
   Position? position;
-  String finalAddress = 'Please Select Any Place In Order To Get Address';
+  String finalAddress = 'Searching...';
   GoogleMapController? googleMapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   String? countryName;
-  String mainAddress = 'Searching...';
+  String mainAddress = 'Please Select Any Place In Order To Get Address';
   String get getFinalAddress => finalAddress;
   String? get getCountryName => countryName;
   String get getMainAddress => mainAddress;
