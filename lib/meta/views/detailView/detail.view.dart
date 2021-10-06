@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pizzeria/app/constants/app.colors.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
 import 'package:pizzeria/core/notifiers/detailNotifers/detail.calculations.notifier.dart';
+import 'package:pizzeria/core/notifiers/themeNotifier/theme.notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:nanoid/nanoid.dart';
 
@@ -17,11 +19,13 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return SafeArea(
       child: Scaffold(
         floatingActionButton: floatingButton(context: context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        backgroundColor: Colors.white,
+        backgroundColor: themeFlag ? AppColors.black : Colors.white,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -29,7 +33,7 @@ class DetailScreen extends StatelessWidget {
             children: [
               appBar(context: context),
               pizzaImage(),
-              middleData(),
+              middleData(context: context),
               footerData(context: context),
             ],
           ),
@@ -39,6 +43,8 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget appBar({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -48,9 +54,8 @@ class DetailScreen extends StatelessWidget {
                 .removeAllData();
             Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
+          icon: Icon(Icons.arrow_back_ios,
+              color: themeFlag ? Colors.white : AppColors.black),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 280.0),
@@ -83,7 +88,9 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget middleData() {
+  Widget middleData({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Padding(
       padding: const EdgeInsets.only(left: 20.0),
       child: Column(
@@ -100,7 +107,7 @@ class DetailScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey.shade500,
+                  color: themeFlag ? Colors.white : AppColors.black,
                 ),
               )
             ],
@@ -114,10 +121,10 @@ class DetailScreen extends StatelessWidget {
                   ),
                   child: Text(
                     queryDocumentSnapshot['name'],
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: themeFlag ? Colors.white : AppColors.black,
                     ),
                   ),
                 ),
@@ -147,6 +154,8 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget footerData({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SizedBox(
@@ -157,7 +166,7 @@ class DetailScreen extends StatelessWidget {
               height: 300,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40.0),
-                  color: Colors.white,
+                  color: themeFlag ? AppColors.black : Colors.white,
                   boxShadow: [
                     BoxShadow(
                         color: Colors.grey.shade500,
@@ -276,15 +285,15 @@ class DetailScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(left: 20.0, right: 20.0, top: 15.0),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, top: 15.0),
                     child: Text(
                       'Add more stuff',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w200,
-                        color: Colors.black,
+                        color: themeFlag ? Colors.white : AppColors.black,
                       ),
                     ),
                   ),
@@ -294,12 +303,12 @@ class DetailScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Cheese',
                           style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black87,
+                            color: themeFlag ? Colors.white : AppColors.black,
                           ),
                         ),
                         Row(
@@ -317,7 +326,8 @@ class DetailScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade500,
+                                color:
+                                    themeFlag ? Colors.white : AppColors.black,
                               ),
                             ),
                             IconButton(
@@ -341,12 +351,12 @@ class DetailScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Onion',
                           style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black87,
+                            color: themeFlag ? Colors.white : AppColors.black,
                           ),
                         ),
                         Row(
@@ -364,7 +374,8 @@ class DetailScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade500,
+                                color:
+                                    themeFlag ? Colors.white : AppColors.black,
                               ),
                             ),
                             IconButton(
@@ -388,12 +399,12 @@ class DetailScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Ketchup',
                           style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black87,
+                            color: themeFlag ? Colors.white : AppColors.black,
                           ),
                         ),
                         Row(
@@ -411,7 +422,8 @@ class DetailScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade500,
+                                color:
+                                    themeFlag ? Colors.white : AppColors.black,
                               ),
                             ),
                             IconButton(
@@ -437,6 +449,8 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget floatingButton({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -501,13 +515,13 @@ class DetailScreen extends StatelessWidget {
               color: Colors.orange.shade400,
               borderRadius: BorderRadius.circular(50.0),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Add to Cart',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: themeFlag ? AppColors.black : Colors.white,
                 ),
               ),
             ),
@@ -518,7 +532,10 @@ class DetailScreen extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushReplacementNamed(AppRoutes.cartRoute);
           },
-          child: const Icon(EvaIcons.shoppingBagOutline),
+          child: Icon(
+            EvaIcons.shoppingBagOutline,
+            color: themeFlag ? AppColors.black : Colors.white,
+          ),
         ),
       ],
     );

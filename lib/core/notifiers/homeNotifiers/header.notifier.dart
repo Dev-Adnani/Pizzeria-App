@@ -2,13 +2,17 @@ import 'package:cache_manager/cache_manager.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pizzeria/app/constants/app.colors.dart';
 import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/notifiers/themeNotifier/theme.notifier.dart';
 import 'package:pizzeria/core/services/maps.service.dart';
 import 'package:provider/provider.dart';
 
 class HeaderNotifier with ChangeNotifier {
   Widget appBar({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(top: 12.0),
@@ -32,7 +36,7 @@ class HeaderNotifier with ChangeNotifier {
                       Provider.of<GenerateMaps>(context, listen: true)
                           .getFinalAddress,
                       style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: themeFlag ? Colors.white : AppColors.black,
                         fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -42,12 +46,56 @@ class HeaderNotifier with ChangeNotifier {
               ],
             ),
             IconButton(
-              onPressed: () async {
-                showAlertDialog(context: context);
+              onPressed: () {
+                showMenu(
+                    color: themeFlag ? AppColors.black : Colors.white,
+                    context: context,
+                    position: const RelativeRect.fromLTRB(300.0, 70.0, 0, 0),
+                    items: [
+                      PopupMenuItem(
+                        child: Consumer<ThemeNotifier>(
+                            builder: (context, notifier, child) {
+                          return TextButton.icon(
+                            onPressed: () {
+                              notifier.toggleTheme();
+                              Navigator.of(context).pop();
+                            },
+                            label: Text(
+                              'Change Theme',
+                              style: TextStyle(
+                                color:
+                                    themeFlag ? Colors.white : AppColors.black,
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.lightbulb_outline,
+                              color: themeFlag ? Colors.white : AppColors.black,
+                            ),
+                          );
+                        }),
+                      ),
+                      PopupMenuItem(
+                        child: TextButton.icon(
+                          onPressed: () {
+                            showAlertDialog(context: context);
+                          },
+                          label: Text(
+                            'Logout?',
+                            style: TextStyle(
+                              color: themeFlag ? Colors.white : AppColors.black,
+                            ),
+                          ),
+                          icon: Icon(
+                            EvaIcons.logOutOutline,
+                            color: themeFlag ? Colors.white : AppColors.black,
+                          ),
+                        ),
+                      )
+                    ]);
               },
               icon: Icon(
-                EvaIcons.logOutOutline,
-                color: Colors.grey.shade600,
+                EvaIcons.moreVertical,
+                color: themeFlag ? Colors.white : AppColors.black,
               ),
             ),
           ],
@@ -65,7 +113,7 @@ class HeaderNotifier with ChangeNotifier {
         style: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.w500,
-          color: Colors.black,
+          color: Colors.blueAccent,
         ),
       ),
       onPressed: () {
@@ -105,21 +153,23 @@ class HeaderNotifier with ChangeNotifier {
     );
   }
 
-  Widget headerText() {
+  Widget headerText({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Container(
       constraints: const BoxConstraints(maxWidth: 250.0),
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
             text: 'What would you like',
             style: TextStyle(
                 fontWeight: FontWeight.w300,
-                color: Colors.black,
+                color: themeFlag ? Colors.white : AppColors.black,
                 fontSize: 30.0),
             children: [
               TextSpan(
                 text: ' to eat?',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: themeFlag ? Colors.white : AppColors.black,
                   fontSize: 35.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -145,11 +195,11 @@ class HeaderNotifier with ChangeNotifier {
                   color: Colors.orange.shade100),
               height: 40.0,
               width: 100.0,
-              child: const Center(
+              child: Center(
                 child: Text(
                   'All Food',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -166,11 +216,11 @@ class HeaderNotifier with ChangeNotifier {
                   color: Colors.orange.shade100),
               height: 40.0,
               width: 100.0,
-              child: const Center(
+              child: Center(
                 child: Text(
                   'Pasta',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -187,11 +237,11 @@ class HeaderNotifier with ChangeNotifier {
                   color: Colors.orange.shade100),
               height: 40.0,
               width: 100.0,
-              child: const Center(
+              child: Center(
                 child: Text(
                   'Pizza',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

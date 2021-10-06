@@ -29,6 +29,7 @@ dependencies:
   nanoid: ^1.0.0
   provider: ^6.0.1
   razorpay_flutter: ^1.2.7
+  shared_preferences: ^2.0.8
   shimmer: ^2.0.0
 
 dev_dependencies:
@@ -39,7 +40,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path : "assets/icons/appicon.png"
+  image_path: "assets/icons/appicon.png"
 
 flutter:
   uses-material-design: true

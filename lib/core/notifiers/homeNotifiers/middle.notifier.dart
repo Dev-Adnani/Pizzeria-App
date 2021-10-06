@@ -1,27 +1,31 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:pizzeria/app/constants/app.colors.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/notifiers/themeNotifier/theme.notifier.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MiddleNotifier with ChangeNotifier {
-  Widget favText() {
+  Widget favText({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
             text: "Best ",
             style: TextStyle(
               fontWeight: FontWeight.w300,
-              color: Colors.black,
+              color: themeFlag ? Colors.white : AppColors.black,
               fontSize: 30.0,
             ),
             children: [
               TextSpan(
                 text: 'Bites!',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: themeFlag ? Colors.white : AppColors.black,
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -32,6 +36,8 @@ class MiddleNotifier with ChangeNotifier {
   }
 
   Widget favData({required BuildContext context, required String collection}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return SizedBox(
       height: 250,
       child: FutureBuilder(
@@ -61,7 +67,7 @@ class MiddleNotifier with ChangeNotifier {
                         borderRadius: const BorderRadius.all(
                           Radius.circular(40.0),
                         ),
-                        color: Colors.white,
+                        color: themeFlag ? AppColors.black : Colors.white,
                         border: Border.all(
                           color: Colors.grey.shade400,
                           width: 3.1,
@@ -104,10 +110,12 @@ class MiddleNotifier with ChangeNotifier {
                               padding: const EdgeInsets.only(top: 8),
                               child: Text(
                                 snapshot.data[index].data()['name'],
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
-                                  color: Colors.black,
+                                  color: themeFlag
+                                      ? Colors.white
+                                      : AppColors.black,
                                 ),
                               ),
                             ),
@@ -143,10 +151,12 @@ class MiddleNotifier with ChangeNotifier {
                                             snapshot.data[index]
                                                 .data()['rating']
                                                 .toString(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                              color: themeFlag
+                                                  ? Colors.white
+                                                  : AppColors.black,
                                             ),
                                           ),
                                         ),
@@ -159,10 +169,12 @@ class MiddleNotifier with ChangeNotifier {
                                       children: [
                                         Text(
                                           '₹ ${snapshot.data[index].data()['price'].toString()}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.black,
+                                            color: themeFlag
+                                                ? Colors.white
+                                                : AppColors.black,
                                           ),
                                         ),
                                       ],
@@ -250,22 +262,24 @@ class MiddleNotifier with ChangeNotifier {
         highlightColor: Colors.grey.shade600);
   }
 
-  Widget businessText() {
+  Widget businessText({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
             text: "Business ",
             style: TextStyle(
               fontWeight: FontWeight.w300,
-              color: Colors.black,
+              color: themeFlag ? Colors.white : AppColors.black,
               fontSize: 30.0,
             ),
             children: [
               TextSpan(
                 text: 'Lunch!',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: themeFlag ? Colors.white : AppColors.black,
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -277,6 +291,8 @@ class MiddleNotifier with ChangeNotifier {
 
   Widget businessData(
       {required BuildContext context, required String collection}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return SizedBox(
         height: 400,
         child: FutureBuilder(
@@ -304,7 +320,7 @@ class MiddleNotifier with ChangeNotifier {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20.0),
                           ),
-                          color: Colors.white,
+                          color: themeFlag ? AppColors.black : Colors.white,
                           border: Border.all(
                             color: Colors.grey.shade400,
                             width: 3.1,
@@ -333,9 +349,11 @@ class MiddleNotifier with ChangeNotifier {
                                     snapshot.data[index]
                                         .data()['name']
                                         .toString(),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 14.0,
-                                      color: Colors.black,
+                                      color: themeFlag
+                                          ? Colors.white
+                                          : AppColors.black,
                                     ),
                                   ),
                                   Text(
@@ -349,21 +367,25 @@ class MiddleNotifier with ChangeNotifier {
                                   ),
                                   Text(
                                     'Orignal Price : ₹ ${snapshot.data[index].data()['notPrice'].toString()}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.black,
+                                      color: themeFlag
+                                          ? Colors.white
+                                          : AppColors.black,
                                     ),
                                   ),
                                   Row(
                                     children: [
                                       Text(
                                         'Discounted Price : ₹ ${snapshot.data[index].data()['price'].toString()}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                          color: themeFlag
+                                              ? Colors.white
+                                              : AppColors.black,
                                         ),
                                       ),
                                     ],

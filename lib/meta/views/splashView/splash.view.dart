@@ -5,8 +5,10 @@ import 'package:cache_manager/core/read_cache_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizzeria/app/constants/app.colors.dart';
 import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
+import 'package:pizzeria/core/notifiers/themeNotifier/theme.notifier.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +54,8 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -63,15 +67,21 @@ class _SplashViewState extends State<SplashView> {
             child: Lottie.asset('assets/animation/pizza.json'),
           ),
           RichText(
-            text: const TextSpan(
+            text: TextSpan(
               text: 'Food ',
-              style: TextStyle(fontSize: 20.0, color: Colors.black),
+              style: TextStyle(
+                fontSize: 20.0,
+                color: themeFlag ? Colors.white : AppColors.black,
+              ),
               children: [
                 TextSpan(
                   text: 'That Makes ',
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: themeFlag ? Colors.white : AppColors.black,
+                  ),
                 ),
-                TextSpan(
+                const TextSpan(
                   text: 'You Cum',
                   style: TextStyle(
                       fontSize: 20.0,
@@ -82,13 +92,19 @@ class _SplashViewState extends State<SplashView> {
             ),
           ),
           RichText(
-            text: const TextSpan(
+            text: TextSpan(
               text: 'Powered ',
-              style: TextStyle(fontSize: 10.0, color: Colors.black),
+              style: TextStyle(
+                fontSize: 10.0,
+                color: themeFlag ? Colors.white : AppColors.black,
+              ),
               children: [
                 TextSpan(
                   text: 'By Pizzeria',
-                  style: TextStyle(fontSize: 10.0, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 10.0,
+                    color: themeFlag ? Colors.white : AppColors.black,
+                  ),
                 ),
               ],
             ),

@@ -6,9 +6,11 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizzeria/app/constants/app.colors.dart';
 import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
+import 'package:pizzeria/core/notifiers/themeNotifier/theme.notifier.dart';
 import 'package:pizzeria/core/services/auth.service.dart';
 import 'package:pizzeria/core/services/firebase.service.dart';
 import 'package:pizzeria/core/services/maps.service.dart';
@@ -74,8 +76,10 @@ class _CartViewState extends State<CartView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeFlag ? AppColors.black : Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -85,7 +89,7 @@ class _CartViewState extends State<CartView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 appBar(context: context),
-                headerText(),
+                headerText(context: context),
                 cartData(context: context),
                 shippingDetails(context: context),
               ],
@@ -93,7 +97,7 @@ class _CartViewState extends State<CartView> {
           ),
         ),
       ),
-      floatingActionButton: floatingButton(),
+      floatingActionButton: floatingButton(context: context),
     );
   }
 
@@ -114,14 +118,18 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  Widget headerText() {
+  Widget headerText({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Column(
-      children: const [
+      children: [
         Text(
           'Your',
-          style: TextStyle(color: Colors.grey, fontSize: 18.0),
+          style: TextStyle(
+              color: themeFlag ? Colors.white : AppColors.black,
+              fontSize: 18.0),
         ),
-        Text(
+        const Text(
           'Cart',
           style: TextStyle(
               color: Colors.red, fontSize: 40.0, fontWeight: FontWeight.bold),
@@ -131,6 +139,8 @@ class _CartViewState extends State<CartView> {
   }
 
   Widget cartData({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return SizedBox(
       height: 400.0,
       child: StreamBuilder<QuerySnapshot<AddCartModel>>(
@@ -185,7 +195,7 @@ class _CartViewState extends State<CartView> {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20.0),
                           ),
-                          color: Colors.white,
+                          color: themeFlag ? AppColors.black : Colors.white,
                           border: Border.all(
                             color: Colors.grey.shade400,
                             width: 3.1,
@@ -217,10 +227,12 @@ class _CartViewState extends State<CartView> {
                                 children: [
                                   Text(
                                     snapshot.data!.docs[index].data().name,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500,
-                                      color: Colors.black,
+                                      color: themeFlag
+                                          ? Colors.white
+                                          : AppColors.black,
                                     ),
                                   ),
                                   Column(
@@ -231,31 +243,39 @@ class _CartViewState extends State<CartView> {
                                     children: [
                                       Text(
                                         'Price : ₹ ${snapshot.data!.docs[index].data().price.toString()}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w700,
-                                          color: Colors.blue,
+                                          color: themeFlag
+                                              ? Colors.white
+                                              : AppColors.black,
                                         ),
                                       ),
                                       Text(
                                         'Cheese   : ${snapshot.data!.docs[index].data().cheeseValue.toString()}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 12.0,
-                                          color: Colors.black,
+                                          color: themeFlag
+                                              ? Colors.white
+                                              : AppColors.black,
                                         ),
                                       ),
                                       Text(
                                         'Onion     : ${snapshot.data!.docs[index].data().onionValue.toString()}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 12.0,
-                                          color: Colors.black,
+                                          color: themeFlag
+                                              ? Colors.white
+                                              : AppColors.black,
                                         ),
                                       ),
                                       Text(
                                         'Ketchup  : ${snapshot.data!.docs[index].data().ketchupValue.toString()}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 12.0,
-                                          color: Colors.black,
+                                          color: themeFlag
+                                              ? Colors.white
+                                              : AppColors.black,
                                         ),
                                       ),
                                     ],
@@ -264,9 +284,15 @@ class _CartViewState extends State<CartView> {
                               ),
                             ),
                             CircleAvatar(
+                              backgroundColor:
+                                  themeFlag ? Colors.white : AppColors.tealDark,
                               child: Text(
                                 snapshot.data!.docs[index].data().size,
-                                style: const TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: themeFlag
+                                      ? AppColors.black
+                                      : Colors.white,
+                                ),
                               ),
                             ),
                             Padding(
@@ -301,6 +327,8 @@ class _CartViewState extends State<CartView> {
   }
 
   Widget shippingDetails({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
       child: Container(
@@ -313,7 +341,7 @@ class _CartViewState extends State<CartView> {
             ),
           ],
           borderRadius: BorderRadius.circular(40.0),
-          color: Colors.white,
+          color: themeFlag ? AppColors.black : Colors.white,
         ),
         height: 250,
         width: MediaQuery.of(context).size.width,
@@ -414,10 +442,10 @@ class _CartViewState extends State<CartView> {
                         ),
                       ],
                     ),
-                    const Text(
+                    Text(
                       '50',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: themeFlag ? Colors.white : AppColors.black,
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -453,8 +481,8 @@ class _CartViewState extends State<CartView> {
                       Provider.of<FirebaseService>(context, listen: true)
                           .total
                           .toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: themeFlag ? Colors.white : AppColors.black,
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -469,7 +497,9 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  Widget floatingButton() {
+  Widget floatingButton({required BuildContext context}) {
+    ThemeNotifier _themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeFlag = _themeNotifier.darkTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -484,13 +514,13 @@ class _CartViewState extends State<CartView> {
               color: Colors.orange.shade400,
               borderRadius: BorderRadius.circular(50.0),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Place Order',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: themeFlag ? Colors.white : AppColors.black,
                 ),
               ),
             ),
