@@ -4,7 +4,7 @@ class AddCartModel {
   final String image;
   final String name;
   final String size;
-  final String price;
+  final int price;
   final String cartPizzaID;
   final int cheeseValue;
   final int ketchupValue;
@@ -25,7 +25,7 @@ class AddCartModel {
     String? image,
     String? name,
     String? size,
-    String? price,
+    int? price,
     String? cartPizzaID,
     int? cheeseValue,
     int? ketchupValue,

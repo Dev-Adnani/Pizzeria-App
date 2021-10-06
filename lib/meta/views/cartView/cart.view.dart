@@ -38,6 +38,8 @@ class _CartViewState extends State<CartView> {
         Razorpay.EVENT_EXTERNAL_WALLET,
         Provider.of<PaymentService>(context, listen: false)
             .handleExternalWallet);
+    Provider.of<FirebaseService>(context, listen: false)
+        .totalPrice(context: context);
     super.initState();
   }
 
@@ -50,7 +52,7 @@ class _CartViewState extends State<CartView> {
   Future checkMeOut() async {
     var options = {
       'key': AppKeys.razorKey,
-      'amount': 150,
+      'amount': Provider.of<FirebaseService>(context, listen: false).total,
       'name': Provider.of<AuthNotifier>(context, listen: false).getUserEmail,
       'description': 'Payment',
       'prefill': {
@@ -271,15 +273,14 @@ class _CartViewState extends State<CartView> {
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    showAlertDialog(
-                                      context: context,
-                                      pizzaName: snapshot.data!.docs[index]
-                                          .data()
-                                          .name,
-                                      cartPizzaID: snapshot.data!.docs[index]
-                                          .data()
-                                          .cartPizzaID,
-                                    );
+                                    Provider.of<FirebaseService>(context,
+                                            listen: false)
+                                        .deleteDataFromCart(
+                                            context: context,
+                                            cartPizzaID: snapshot
+                                                .data!.docs[index]
+                                                .data()
+                                                .cartPizzaID);
                                   },
                                   icon: const Icon(
                                     FontAwesomeIcons.trashAlt,
@@ -299,56 +300,6 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  showAlertDialog({
-    required BuildContext context,
-    required String pizzaName,
-    required String cartPizzaID,
-  }) {
-    Widget cancelButton = TextButton(
-      child: const Text(
-        "No",
-        style: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w500,
-          color: Colors.black,
-        ),
-      ),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text(
-        "Yes",
-        style: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w500,
-          color: Colors.red,
-        ),
-      ),
-      onPressed: () {
-        Provider.of<FirebaseService>(context, listen: false)
-            .deleteDataFromCart(context: context, cartPizzaID: cartPizzaID)
-            .whenComplete(() => Navigator.of(context).pop());
-      },
-    );
-    AlertDialog alert = AlertDialog(
-      title: Text("Delete $pizzaName From Your Cart ?"),
-      content: const Text("You Will Regret About It!"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   Widget shippingDetails({required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
@@ -364,7 +315,7 @@ class _CartViewState extends State<CartView> {
           borderRadius: BorderRadius.circular(40.0),
           color: Colors.white,
         ),
-        height: 200,
+        height: 250,
         width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
@@ -464,7 +415,7 @@ class _CartViewState extends State<CartView> {
                       ],
                     ),
                     const Text(
-                      '300',
+                      '50',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16.0,
@@ -498,9 +449,11 @@ class _CartViewState extends State<CartView> {
                         ),
                       ],
                     ),
-                    const Text(
-                      '300',
-                      style: TextStyle(
+                    Text(
+                      Provider.of<FirebaseService>(context, listen: true)
+                          .total
+                          .toString(),
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
