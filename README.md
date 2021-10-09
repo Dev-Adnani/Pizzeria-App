@@ -1,16 +1,60 @@
-# pizzeria
+# Pizzeria
 
-A new Flutter project.
+<img align="left"  height="200px" width="200px" alt="pizzeria"  src="https://github.com/Dev-Adnani/Pizzeria-App/blob/main/assets/icons/appicon.png"/>
 
-## Getting Started
+##  Brief About App
 
-This project is a starting point for a Flutter application.
+- A Pizzeria Delivery App  !
+-  Pizzeria could be a Flutter Pizza Delivery App With Complete Backend And quantifiability.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## ⚙️ Tech-Stack
+The application is built entirely with Flutter. For the backend services, I have made use of Firebase.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## 💫 App Features
+ 
+- Google Map Integration
+- Auto Detect User Location
+- RazorPay Integration 
+- Login / Sign Up x Firebase
+- Dark / Light Mode
+- Complex Cart System 
+- Shimmer Effects
+
+## Libraries
+
+- Main Library Used in App 
+    - Provider
+    - Cache Manager
+    - Cloud Firestore
+    - Cupertino Icons
+    - Eva Icons Flutter
+    - Firebase Auth
+    - Firebase Core
+    - Flutter Launcher Icons
+    - Fluttertoast
+    - Font Awesome Flutter
+    - Geocoder
+    - Geolocator
+    - Google Maps Flutter
+    - Google Sign In
+    - Lottie
+    - Nanoid
+    - Razorpay Flutter
+    - Shared Preferences
+    - Shimmer
+
+
+## :zap: Screenshots
+
+  <img align="left" alt="pizzeria"  src="https://imgur.com/AY1I9Rm.png">
+  <img align="left" alt="pizzeria"  src="https://i.imgur.com/8jcj1Tw.png">
+  <img align="left" alt="pizzeria"  src="https://i.imgur.com/yWANThp.png">
+  <img align="left" alt="pizzeria"  src="https://imgur.com/LucgR8i.png">
+  <img align="left" alt="pizzeria"  src="https://imgur.com/AXcs7Bu.png">
+  <img align="left" alt="pizzeria"  src="https://imgur.com/KZvFTkW.png">
+
+## :heart: Found this project useful?
+
+If you found this project useful, then please consider giving it a :star: on Github and sharing it with your friends via social media.
