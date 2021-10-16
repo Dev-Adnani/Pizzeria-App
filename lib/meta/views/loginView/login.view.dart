@@ -97,7 +97,7 @@ class LoginView extends StatelessWidget {
                       width: 100.0,
                       height: 50.0,
                       child: const Center(
-                        child: Text('Sign in',
+                        child: Text('Sign Up',
                             style: TextStyle(
                                 color: Colors.redAccent,
                                 fontWeight: FontWeight.bold,

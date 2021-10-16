@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizzeria/app/constants/app.colors.dart';
+import 'package:pizzeria/app/constants/app.discountCode.dart';
 import 'package:pizzeria/app/constants/app.keys.dart';
 import 'package:pizzeria/app/routes/app.routes.dart';
 import 'package:pizzeria/core/models/addCart.model.dart';
@@ -27,6 +29,9 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   Razorpay razorpay = Razorpay();
+  bool check = false;
+
+  TextEditingController couponText = TextEditingController();
 
   @override
   void initState() {
@@ -92,12 +97,18 @@ class _CartViewState extends State<CartView> {
                 headerText(context: context),
                 cartData(context: context),
                 shippingDetails(context: context),
+                const SizedBox(
+                  height: 30,
+                ),
+                floatingButton(context: context),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),
         ),
       ),
-      floatingActionButton: floatingButton(context: context),
     );
   }
 
@@ -155,8 +166,7 @@ class _CartViewState extends State<CartView> {
             )
             .snapshots(),
         builder: (BuildContext context, snapshot) {
-          if (snapshot.data!.docs.isEmpty ||
-              snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.data!.docs.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,6 +180,30 @@ class _CartViewState extends State<CartView> {
                   padding: EdgeInsets.all(32.0),
                   child: Text(
                     'Our Other Customers Have Already Ordered & Still You Are Thinking',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.blue,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/animation/pizza.json',
+                  height: 250,
+                  width: 250,
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: Text(
+                    ' Loading........',
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,
@@ -343,7 +377,7 @@ class _CartViewState extends State<CartView> {
           borderRadius: BorderRadius.circular(40.0),
           color: themeFlag ? AppColors.black : Colors.white,
         ),
-        height: 250,
+        height: 300,
         width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
@@ -380,6 +414,79 @@ class _CartViewState extends State<CartView> {
                             .selectLocation(context);
                       },
                       icon: const Icon(Icons.edit),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Icon(Icons.card_giftcard),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Container(
+                            constraints: const BoxConstraints(maxWidth: 200),
+                            child: TextFormField(
+                              controller: couponText,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter Coupon Code',
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                      child: const Text('Apply'),
+                      onPressed: () {
+                        if (couponText.text.isNotEmpty) {
+                          if (AppDiscount.couponCode
+                              .contains(couponText.text)) {
+                            if (check == false) {
+                              Provider.of<FirebaseService>(context,
+                                      listen: false)
+                                  .updateDiscount();
+                              Fluttertoast.showToast(
+                                  msg: "Ohh Yeah Coupon Applied",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.grey.shade500,
+                                  textColor: Colors.white70,
+                                  fontSize: 16.0);
+                              check = true;
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Oops Wrong Coupon Code",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey.shade500,
+                              textColor: Colors.white70,
+                              fontSize: 16.0,
+                            );
+                          }
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Ehh Atleast Enter A Coupon!",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey.shade500,
+                              textColor: Colors.white70,
+                              fontSize: 16.0);
+                        }
+                      },
                     )
                   ],
                 ),

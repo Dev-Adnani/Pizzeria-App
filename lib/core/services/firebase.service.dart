@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 class FirebaseService with ChangeNotifier {
   int total = 0;
+  bool couponCode = false;
+
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   Future fetchData({required String collection}) async {
     QuerySnapshot querySnapshot =
@@ -50,9 +52,16 @@ class FirebaseService with ChangeNotifier {
       int tempTotal =
           snapshot.docs.fold(0, (tot, doc) => tot + doc.data().price);
       total = tempTotal + 50;
+      couponCode ? total - 30 : total;
 
       notifyListeners();
     });
+  }
+
+  void updateDiscount() {
+    couponCode = true;
+    total = total - 30;
+    notifyListeners();
   }
 
   Future placeOrder({
