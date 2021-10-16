@@ -191,28 +191,30 @@ class _CartViewState extends State<CartView> {
               ],
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Lottie.asset(
-                  'assets/animation/pizza.json',
-                  height: 250,
-                  width: 250,
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: Text(
-                    ' Loading........',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.blue,
-                    ),
-                    textAlign: TextAlign.center,
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'assets/animation/pizza.json',
+                    height: 250,
+                    width: 250,
                   ),
-                ),
-              ],
+                  const Padding(
+                    padding: EdgeInsets.all(32.0),
+                    child: Text(
+                      ' Loading........',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.blue,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             );
           } else {
             return ListView.builder(
