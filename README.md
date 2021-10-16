@@ -14,13 +14,14 @@ The application is built entirely with Flutter. For the backend services, I have
 
 ## 💫 App Features
  
-- Google Map Integration
-- Auto Detect User Location
-- RazorPay Integration 
-- Login / Sign Up x Firebase
-- Dark / Light Mode
+- Google Map Integration 🔥
+- Auto Detect User Location 🔥
+- RazorPay Integration 🔥
+- Login / Sign Up x Firebase🔥
+- Dark / Light Mode 🔥
 - Complex Cart System 
-- Shimmer Effects
+- Coupon Code Feature 🔥
+- Shimmer Effects 🔥
 
 ## Libraries
 
